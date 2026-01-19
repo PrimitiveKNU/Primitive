@@ -24,7 +24,7 @@ import Skeleton from '@/src/Components/common/Skeleton';
 import FilterContainer from '@/src/Components/project/FilterContainer';
 import ProjectHeader from '@/src/Components/project/ProjectHeader';
 import ProjectGridLayout from '@/src/Components/project/ProjectGridLayout';
-import useInfiniteScroll from '@/src/Hooks/useInfiniteScroll';
+import useInfiniteScroll from '@/src/Hooks/common/useInfiniteScroll';
 
 import ProjectSearchBar from '@/src/Components/project/ProjectSearchBar';
 import GlassButton from '@/src/Components/common/button/GlassButton';

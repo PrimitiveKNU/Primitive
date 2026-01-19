@@ -3,6 +3,8 @@ import NavBar from '../../Components/common/NavBar';
 import Footer from '../../Components/common/Footer';
 import { useSpring, animated } from 'react-spring';
 import { recruitData } from '@/src/Pages/RecruitPage/data';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../../firebase';
 
 const RecruitPage = () => {
   const [showInfo, setShowInfo] = useState(false);
@@ -10,29 +12,118 @@ const RecruitPage = () => {
   const [loading, setLoading] = useState(true);
   const [isDate, setIsDate] = useState(false);
   const [timeString, setTimeString] = useState('');
+  const [formURL, setFormURL] = useState<string>(recruitData.form);
+  const [otURL, setOtURL] = useState<string>(recruitData.ot);
+  const [formFileName, setFormFileName] = useState<string>('모집신청서.hwp');
+  const [otFileName, setOtFileName] = useState<string>('OT자료.pdf');
 
-  // 같은 폴더 내 data.ts에서 모집 정보를 수정해주세요.
+  // Firestore에서 동적으로 파일 정보 로드
   useEffect(() => {
-    const now = new Date();
-    const start = new Date(
-      recruitData.recruitStartDate.year,
-      recruitData.recruitStartDate.month - 1,
-      recruitData.recruitStartDate.day,
-    );
-    const end = new Date(
-      recruitData.recruitEndDate.year,
-      recruitData.recruitEndDate.month - 1,
-      recruitData.recruitEndDate.day,
-      23,
-      59,
-      59,
-    );
-    const weeks = ['일', '월', '화', '수', '목', '금', '토'];
+    const fetchRecruitFiles = async () => {
+      try {
+        const year = new Date().getFullYear();
+        const docRef = doc(db, 'recruitFiles', year.toString());
+        const docSnap = await getDoc(docRef);
 
-    setTimeString(
-      `${start.getFullYear()}년 모집 기간: ${start.getMonth() + 1}월 ${start.getDate()}일 (${weeks[start.getDay()]}) ~ ${end.getMonth() + 1}월 ${end.getDate()}일 (${weeks[end.getDay()]})`,
-    );
-    setIsDate(now >= start && now <= end);
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          if (data.formFile?.downloadURL) {
+            setFormURL(data.formFile.downloadURL);
+            if (data.formFile.name) {
+              setFormFileName(data.formFile.name);
+            }
+          }
+          if (data.otFile?.downloadURL) {
+            setOtURL(data.otFile.downloadURL);
+            if (data.otFile.name) {
+              setOtFileName(data.otFile.name);
+            }
+          }
+        }
+      } catch (error) {
+        console.error('모집 파일 정보 로드 실패:', error);
+      }
+    };
+
+    fetchRecruitFiles();
+  }, []);
+
+  // Firestore 또는 기본값으로부터 모집 일정 정보 로드
+  useEffect(() => {
+    const fetchSchedule = async () => {
+      try {
+        const year = new Date().getFullYear();
+        const docRef = doc(db, 'recruitSchedules', year.toString());
+        const docSnap = await getDoc(docRef);
+
+        const now = new Date();
+        let start: Date;
+        let end: Date;
+        let weeks = ['일', '월', '화', '수', '목', '금', '토'];
+
+        if (docSnap.exists()) {
+          // Firestore에서 일정을 가져온 경우
+          const scheduleData = docSnap.data();
+          const [startYear, startMonth, startDay] = scheduleData.startDate.split('-').map(Number);
+          const [endYear, endMonth, endDay] = scheduleData.endDate.split('-').map(Number);
+
+          start = new Date(startYear, startMonth - 1, startDay);
+          const startTime = scheduleData.startTime || '00:00';
+          const [startHour, startMin] = startTime.split(':').map(Number);
+          start.setHours(startHour, startMin, 0);
+
+          end = new Date(endYear, endMonth - 1, endDay);
+          const endTime = scheduleData.endTime || '23:59';
+          const [endHour, endMin] = endTime.split(':').map(Number);
+          end.setHours(endHour, endMin, 59);
+        } else {
+          // 기본값 사용 (data.ts의 값)
+          start = new Date(
+            recruitData.recruitStartDate.year,
+            recruitData.recruitStartDate.month - 1,
+            recruitData.recruitStartDate.day,
+          );
+          end = new Date(
+            recruitData.recruitEndDate.year,
+            recruitData.recruitEndDate.month - 1,
+            recruitData.recruitEndDate.day,
+            23,
+            59,
+            59,
+          );
+        }
+
+        setTimeString(
+          `${start.getFullYear()}년 모집 기간: ${start.getMonth() + 1}월 ${start.getDate()}일 (${weeks[start.getDay()]}) ~ ${end.getMonth() + 1}월 ${end.getDate()}일 (${weeks[end.getDay()]})`,
+        );
+        setIsDate(now >= start && now <= end);
+      } catch (error) {
+        console.error('모집 일정 로드 실패:', error);
+        // 에러 발생 시 기본값 사용
+        const now = new Date();
+        const start = new Date(
+          recruitData.recruitStartDate.year,
+          recruitData.recruitStartDate.month - 1,
+          recruitData.recruitStartDate.day,
+        );
+        const end = new Date(
+          recruitData.recruitEndDate.year,
+          recruitData.recruitEndDate.month - 1,
+          recruitData.recruitEndDate.day,
+          23,
+          59,
+          59,
+        );
+        const weeks = ['일', '월', '화', '수', '목', '금', '토'];
+
+        setTimeString(
+          `${start.getFullYear()}년 모집 기간: ${start.getMonth() + 1}월 ${start.getDate()}일 (${weeks[start.getDay()]}) ~ ${end.getMonth() + 1}월 ${end.getDate()}일 (${weeks[end.getDay()]})`,
+        );
+        setIsDate(now >= start && now <= end);
+      }
+    };
+
+    fetchSchedule();
   }, []);
 
   const [springs, api] = useSpring(() => ({
@@ -53,6 +144,27 @@ const RecruitPage = () => {
         opacity: springs.opacity.get() === 0 ? 1 : 0,
       },
     });
+  };
+
+  const handleFileDownload = async (fileURL: string, fileName: string) => {
+    try {
+      // Firebase Storage URL에서 파일명 추출
+      const response = await fetch(fileURL);
+      const blob = await response.blob();
+
+      // Blob을 로컬 URL로 변환
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', fileName || 'download');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('파일 다운로드 실패:', error);
+      alert('파일 다운로드에 실패했습니다.');
+    }
   };
 
   const disabledStyle =
@@ -76,22 +188,20 @@ const RecruitPage = () => {
           {isDate ? (
             <>
               {' '}
-              <a href={recruitData.form} download>
-                <button
-                  disabled={!isDate}
-                  className={`bg-white shadow-xl py-2 px-6 rounded-lg hover:shadow-lg hover:shadow-indigo-200  w-72 ${disabledStyle}`}
-                >
-                  👉 모집 신청서 양식 다운로드
-                </button>
-              </a>
-              <a href={recruitData.ot} download>
-                <button
-                  disabled={!isDate}
-                  className={`bg-white shadow-xl py-2 px-6 rounded-lg hover:shadow-lg hover:shadow-indigo-200  w-72 ${disabledStyle}`}
-                >
-                  👉 신입생 OT 자료 다운로드
-                </button>
-              </a>
+              <button
+                disabled={!isDate}
+                onClick={() => handleFileDownload(formURL, formFileName)}
+                className={`bg-white shadow-xl py-2 px-6 rounded-lg hover:shadow-lg hover:shadow-indigo-200  w-72 ${disabledStyle}`}
+              >
+                👉 모집 신청서 양식 다운로드
+              </button>
+              <button
+                disabled={!isDate}
+                onClick={() => handleFileDownload(otURL, otFileName)}
+                className={`bg-white shadow-xl py-2 px-6 rounded-lg hover:shadow-lg hover:shadow-indigo-200  w-72 ${disabledStyle}`}
+              >
+                👉 신입생 OT 자료 다운로드
+              </button>
             </>
           ) : (
             <div className={'my-1'}></div>

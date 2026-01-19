@@ -29,13 +29,13 @@ interface IRecruitData {
 export const recruitData: IRecruitData = {
   recruitStartDate: {
     // 모집 시작일 연 월 일 단위로 수정해주세요.
-    year: 2025,
-    month: 2,
+    year: 2026,
+    month: 1,
     day: 10,
   },
   recruitEndDate: {
     // 모집 마감일 연 월 일 단위로 수정해주세요.
-    year: 2025,
+    year: 2026,
     month: 3,
     day: 14,
   },
