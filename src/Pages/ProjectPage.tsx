@@ -33,8 +33,10 @@ type MyIndexType = {
 };
 
 // filterKind가 Filter 타입인지 확인하는 함수
-const isFilter = (value: any): value is Filter => {
-  return ['default', 'app', 'web', 'personal', 'team', 'my'].includes(value);
+const isFilter = (value: unknown): value is Filter => {
+  return ['default', 'app', 'web', 'personal', 'team', 'my'].includes(
+    value as string,
+  );
 };
 
 const ProjectPage = () => {

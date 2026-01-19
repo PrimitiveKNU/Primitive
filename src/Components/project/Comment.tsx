@@ -15,10 +15,10 @@ import { useNavigate } from 'react-router-dom';
 import DefaultModal from '@/src/Components/common/modal/DefaultModal';
 import ModalLayout from '@/src/Components/common/modal/ModalLayout';
 import useModal from '@/src/Hooks/common/useModal';
-import Reply from './Reply';
 import { db } from '../../firebase';
 import CommentType from '../../Types/CommentType';
 import LoadingCircle from '../common/LoadingCircle';
+import Reply from './Reply';
 
 interface Params {
   id: string;

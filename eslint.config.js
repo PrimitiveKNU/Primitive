@@ -1,8 +1,8 @@
-import js from '@eslint/js';
 import importPlugin from 'eslint-plugin-import';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import tseslint from 'typescript-eslint';
+import js from '@eslint/js';
 
 export default [
   {
@@ -23,30 +23,24 @@ export default [
       'react/prop-types': 'off',
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
+      'import/no-self-import': ['error'],
       'import/order': [
         'error',
         {
-          groups: [
-            'builtin',
-            'external',
-            'internal',
-            ['parent', 'sibling'],
-            'index',
-            'object',
-            'type',
-          ],
+          groups: ['builtin', 'external', 'internal', 'parent', 'sibling'],
           pathGroups: [
             {
-              pattern: '@/**',
-              group: 'internal',
+              pattern: '@*/**',
+              group: 'external',
               position: 'after',
             },
           ],
-          'newlines-between': 'never',
+          pathGroupsExcludedImportTypes: [],
           alphabetize: {
             order: 'asc',
             caseInsensitive: true,
           },
+          'newlines-between': 'never',
         },
       ],
     },

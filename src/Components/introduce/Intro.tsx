@@ -2,8 +2,6 @@ import { collection, getDocs, limit, query, where } from 'firebase/firestore';
 import { useEffect, useRef, useState } from 'react';
 import { FaArrowRight } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import ActivityCard from './ActivityCard';
-import Cover from './Cover';
 import { db } from '../../firebase';
 import Introduction1 from '../../Images/2024/1.webp';
 import Introduction2 from '../../Images/2024/2.webp';
@@ -11,6 +9,8 @@ import Introduction3 from '../../Images/2024/3.webp';
 import Introduction4 from '../../Images/2024/4.webp';
 import { ProjectDetail } from '../../Types/ProjectType';
 import ProjectCard from '../project/ProjectCard';
+import ActivityCard from './ActivityCard';
+import Cover from './Cover';
 
 const Intro = () => {
   // 스크롤 애니메이션 관련 상태 관리

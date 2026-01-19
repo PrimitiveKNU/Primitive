@@ -38,7 +38,7 @@ const MyPage = () => {
 
   // UI 상태
   const [isUploading, setIsUploading] = useState(false);
-  const [progress, setProgress] = useState(0);
+  const [setProgress] = useState(0);
 
   // 라우터
   const navigate = useNavigate();
