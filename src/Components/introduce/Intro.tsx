@@ -34,8 +34,8 @@ const Intro = () => {
   const memberCount = 120;
   const activityYears = 20;
   const [animatedProjectCount, setAnimatedProjectCount] = useState(0);
-  const [animatedMemberCount, setAnimatedMemberCount] = useState(0);
-  const [animatedActivityYears, setAnimatedActivityYears] = useState(0);
+  const [, setAnimatedMemberCount] = useState(0);
+  const [, setAnimatedActivityYears] = useState(0);
 
   // 프로젝트 상태
   const [projects, setProjects] = useState<ProjectDetail[]>();
@@ -60,9 +60,11 @@ const Intro = () => {
       entries: IntersectionObserverEntry[],
       observer: IntersectionObserver,
     ) => {
-      entries.forEach((entry, i) => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          projectCount && startAnimation();
+          if (projectCount) {
+            startAnimation();
+          }
           (entry.target as HTMLElement).style.opacity = '1';
           (entry.target as HTMLElement).style.transform = 'translateY(0)';
           observer.unobserve(entry.target as HTMLElement);
@@ -275,6 +277,7 @@ const Intro = () => {
                     projectDescription={project.intro!}
                     projectTechStacks={project.techStack!}
                     projectParticipate={project.participants}
+                    setTagFilter={() => {}}
                   />
                 ))
               : projects?.map((project) => (
@@ -288,6 +291,7 @@ const Intro = () => {
                     projectTechStacks={project.techStack!}
                     projectParticipate={project.participants}
                     isPrivate={project.isPrivate}
+                    setTagFilter={() => {}}
                   />
                 ))}
           </div>

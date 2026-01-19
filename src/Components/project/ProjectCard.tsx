@@ -1,8 +1,8 @@
-import LoadingSpinner from '@/src/Components/common/loading/LoadingSpinner';
-import { formatTimeDifference } from '@/src/Utils/timeFormat';
 import { useState } from 'react';
 import { HiLockClosed } from 'react-icons/hi';
 import { useNavigate } from 'react-router-dom';
+import LoadingSpinner from '@/src/Components/common/loading/LoadingSpinner';
+import { formatTimeDifference } from '@/src/Utils/timeFormat';
 import ProjectType from '../../Types/ProjectType';
 
 interface Props extends ProjectType {
