@@ -11,7 +11,6 @@ import ProjectDetailPage from './Pages/ProjectDetailPage';
 import ProjectPage from './Pages/ProjectPage';
 import ProjectUploadPage from './Pages/ProjectUploadPage';
 import RecruitPage from './Pages/RecruitPage/RecruitPage';
-import { TestPopup } from './Pages/TestPopup';
 
 const routes = [
   {
@@ -59,11 +58,7 @@ const routes = [
     path: '/notice/:id',
   },
   {
-    element: (
-      <ProtectedRoute>
-        <TestPopup />
-      </ProtectedRoute>
-    ),
+    element: <div></div>,
     path: '/test',
   },
   {
