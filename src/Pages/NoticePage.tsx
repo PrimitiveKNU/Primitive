@@ -9,20 +9,6 @@ import { db } from '../firebase';
 import Notice from '../Types/NoticeType';
 
 const NoticePage = () => {
-  const exNotice = [
-    {
-      title: 'Primitive 홈페이지 개발의도',
-      content: 'Primitive는..',
-      category: '공지사항',
-    },
-    {
-      title: '프리미티브 홈페이지 업데이트 사항',
-      content:
-        '이제 프로젝트를 업로드할 때 깃허브와 기타링크 총 2가지의 링크를 추가할 수 있도록 업데이트 되었습니다.',
-      category: '업데이트',
-    },
-  ];
-
   const filtercategorys = ['전체', '공지사항', '업데이트', '서비스', '공고'];
 
   // 상태관리

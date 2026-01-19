@@ -1,19 +1,16 @@
 import { getAuth } from 'firebase/auth';
 import {
-  doc,
-  updateDoc,
   collection,
-  getDocs,
-  query,
-  where,
+  doc,
   getDoc,
+  getDocs,
   orderBy,
-  startAt,
-  endAt,
+  query,
+  updateDoc,
+  where,
 } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
-import { FaArrowAltCircleUp } from 'react-icons/fa';
-import { FaArrowCircleDown } from 'react-icons/fa';
+import { FaArrowAltCircleUp, FaArrowCircleDown } from 'react-icons/fa';
 import { HiSearch } from 'react-icons/hi';
 import { db } from '../../firebase';
 import { MemberDataType } from '../../Types/MemberType';
@@ -41,7 +38,6 @@ const MemberTable = ({
 
   // 상태 관리
   const [authorityLevel, setAuthorityLevel] = useState(0);
-  const authorityArr = ['동아리원', '관리자', '부회장', '회장'];
   const [searchInput, setSearchInput] = useState('');
   const [searchedUsers, setSearchedUsers] = useState<MemberDataType[]>([]);
 

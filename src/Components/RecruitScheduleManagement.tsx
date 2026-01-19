@@ -1,5 +1,5 @@
-import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
-import { useState, useEffect } from 'react';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
 import { Popup, usePopup } from '../Components/common/popup';
 import { db } from '../firebase';
 import { RecruitSchedule } from '../Types/RecruitFileType';

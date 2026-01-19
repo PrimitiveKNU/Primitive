@@ -1,5 +1,5 @@
 import { collection, doc, getDocs, query, setDoc } from 'firebase/firestore';
-import { useState, ChangeEvent, useEffect } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { db } from '../firebase';
 
 interface Props {
@@ -41,12 +41,16 @@ const StaffsWord = ({ id, level }: Props) => {
     try {
       const response = await getDocs(query(collection(db, 'words')));
 
-      const docs = response.docs.map((doc, index) => ({
+      const docs = response.docs.map((doc) => ({
         ...doc.data(),
       }));
 
       docs.forEach((doc) => {
-        doc.level === 3 ? setPresidentWord(doc.word) : setViceWord(doc.word);
+        if (doc.level === 3) {
+          setPresidentWord(doc.word);
+        } else {
+          setViceWord(doc.word);
+        }
       });
     } catch (err) {
       console.error(err);

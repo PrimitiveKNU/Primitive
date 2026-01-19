@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { MemberCardType } from '../../Types/MemberType';
 
 const MemberCard = ({

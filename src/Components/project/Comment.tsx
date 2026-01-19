@@ -2,14 +2,13 @@ import { getAuth } from 'firebase/auth';
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
+  orderBy,
   query,
   where,
-  orderBy,
-  deleteDoc,
-  updateDoc,
 } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';

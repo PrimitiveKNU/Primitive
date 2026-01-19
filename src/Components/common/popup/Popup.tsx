@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { PopupProvider } from './PopupContext';
 
@@ -179,7 +179,6 @@ const PopupWrapper: React.FC<PopupProps> & {
       isOpen={isOpen}
       onClose={handleClose}
       closeOnEscape={closeOnEscape}
-      closeOnBackdropClick={closeOnBackdropClick}
     >
       <div
         className='fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4 backdrop-blur-sm'
@@ -215,9 +214,9 @@ PopupWrapper.Content = Content;
 export const Popup = PopupWrapper;
 
 export type {
-  PopupTitleProps,
-  PopupSubtitleProps,
-  PopupImageProps,
   PopupButtonProps,
   PopupContentProps,
+  PopupImageProps,
+  PopupSubtitleProps,
+  PopupTitleProps,
 };
