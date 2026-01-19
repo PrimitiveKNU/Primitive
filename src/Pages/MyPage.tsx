@@ -23,7 +23,6 @@ import useAuthStore from '../store';
 import { ProjectDetail } from '../Types/ProjectType';
 import User from '../Types/User.d';
 
-
 const MyPage = () => {
   // 전역 상태 관리
   const { isLoggedIn, logout } = useAuthStore();

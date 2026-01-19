@@ -11,7 +11,6 @@ import {
 } from '@/components/ui/select';
 import { Filter } from '@/src/Types/ProjectType';
 
-
 interface ProjectSearchBarProps {
   filter: Filter;
   setFilter: (filter: Filter) => void;

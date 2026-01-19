@@ -1,3 +1,4 @@
+import ProtectedRoute from '@/src/Components/layout/ProtectedRoute';
 import AdminPage from './Pages/AdminPage';
 import ErrorPage from './Pages/ErrorPage';
 import LoginPage from './Pages/LoginPage';
@@ -11,7 +12,6 @@ import ProjectPage from './Pages/ProjectPage';
 import ProjectUploadPage from './Pages/ProjectUploadPage';
 import RecruitPage from './Pages/RecruitPage/RecruitPage';
 import { TestPopup } from './Pages/TestPopup';
-import ProtectedRoute from '@/src/Components/layout/ProtectedRoute';
 
 const routes = [
   {

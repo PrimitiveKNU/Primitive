@@ -1,18 +1,18 @@
-import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import {
+  deleteObject,
+  getDownloadURL,
   ref,
   uploadBytesResumable,
-  getDownloadURL,
-  deleteObject,
 } from 'firebase/storage';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Popup, usePopup } from '../Components/common/popup';
-import { storage, db } from '../firebase';
-import { RecruitFilesData, RecruitFileInfo } from '../Types/RecruitFileType';
+import { db, storage } from '../firebase';
+import { RecruitFilesData } from '../Types/RecruitFileType';
 
 const RecruitFileUpload = () => {
   const [selectedYear, setSelectedYear] = useState<number>(
-    new Date().getFullYear()
+    new Date().getFullYear(),
   );
   const [years, setYears] = useState<number[]>([]);
   const [recruitData, setRecruitData] = useState<RecruitFilesData | null>(null);
@@ -67,7 +67,7 @@ const RecruitFileUpload = () => {
     file: File,
     type: 'form' | 'ot',
     setUploading: (state: boolean) => void,
-    setProgress: (progress: number) => void
+    setProgress: (progress: number) => void,
   ) => {
     if (!file) return;
 
@@ -81,6 +81,7 @@ const RecruitFileUpload = () => {
         await deleteObject(storageRef);
       } catch (e) {
         // 파일이 없는 경우 무시
+        console.error('기존 파일 삭제 실패 (무시됨):', e);
       }
 
       // 파일 업로드
@@ -115,7 +116,7 @@ const RecruitFileUpload = () => {
               },
               updatedAt: new Date().toISOString(),
             },
-            { merge: true }
+            { merge: true },
           );
 
           // UI 업데이트
@@ -135,7 +136,7 @@ const RecruitFileUpload = () => {
           showPopup('성공', '파일이 성공적으로 업로드되었습니다.');
           setProgress(0);
           setUploading(false);
-        }
+        },
       );
     } catch (error) {
       console.error('파일 업로드 실패:', error);
@@ -147,7 +148,7 @@ const RecruitFileUpload = () => {
   const deleteFile = async (type: 'form' | 'ot') => {
     if (
       !confirm(
-        `${type === 'form' ? '모집 신청서' : 'OT 자료'}를 삭제하시겠습니까?`
+        `${type === 'form' ? '모집 신청서' : 'OT 자료'}를 삭제하시겠습니까?`,
       )
     ) {
       return;
@@ -170,7 +171,7 @@ const RecruitFileUpload = () => {
             [`${type}File`]: undefined,
             updatedAt: new Date().toISOString(),
           },
-          { merge: true }
+          { merge: true },
         );
       }
 
@@ -259,7 +260,9 @@ const RecruitFileUpload = () => {
                     </p>
                   </div>
                 ) : (
-                  <p className='text-xs text-gray-500 mt-1'>업로드된 파일 없음</p>
+                  <p className='text-xs text-gray-500 mt-1'>
+                    업로드된 파일 없음
+                  </p>
                 )}
               </div>
               {recruitData?.formFile && (
@@ -288,7 +291,9 @@ const RecruitFileUpload = () => {
                     </p>
                   </div>
                 ) : (
-                  <p className='text-xs text-gray-500 mt-1'>업로드된 파일 없음</p>
+                  <p className='text-xs text-gray-500 mt-1'>
+                    업로드된 파일 없음
+                  </p>
                 )}
               </div>
               {recruitData?.otFile && (
@@ -331,7 +336,7 @@ const RecruitFileUpload = () => {
                     file,
                     'form',
                     setUploadingForm,
-                    setUploadProgressForm
+                    setUploadProgressForm,
                   );
                 }
               }}

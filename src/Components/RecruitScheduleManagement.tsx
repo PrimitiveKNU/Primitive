@@ -162,7 +162,8 @@ const RecruitScheduleManagement = () => {
       {/* 마지막 수정 정보 */}
       <div className='mb-6 p-3 bg-blue-50 border border-blue-200 rounded'>
         <p className='text-sm text-gray-700'>
-          마지막 업데이트: <span className='font-semibold'>{formatLastUpdated()}</span>
+          마지막 업데이트:{' '}
+          <span className='font-semibold'>{formatLastUpdated()}</span>
         </p>
       </div>
 
@@ -263,7 +264,9 @@ const RecruitScheduleManagement = () => {
 
           {/* 미리보기 */}
           <div className='p-4 bg-gray-50 border border-gray-200 rounded'>
-            <p className='text-sm font-semibold text-gray-700 mb-2'>일정 미리보기</p>
+            <p className='text-sm font-semibold text-gray-700 mb-2'>
+              일정 미리보기
+            </p>
             <p className='text-sm text-gray-600'>
               {startDate} {startTime} ~ {endDate} {endTime}
             </p>
@@ -280,7 +283,11 @@ const RecruitScheduleManagement = () => {
                   : 'bg-emerald-950 hover:bg-emerald-900 disabled:bg-gray-400'
               }`}
             >
-              {isReadOnly ? '과거 연도 (수정 불가)' : saving ? '저장 중...' : '저장하기'}
+              {isReadOnly
+                ? '과거 연도 (수정 불가)'
+                : saving
+                  ? '저장 중...'
+                  : '저장하기'}
             </button>
           </div>
         </div>

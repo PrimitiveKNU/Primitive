@@ -2,10 +2,10 @@
 export const extractGitHubInfo = (githubUrl: string) => {
   try {
     const url = new URL(githubUrl);
-    const [, username, repo] = url.pathname.split("/");
+    const [, username, repo] = url.pathname.split('/');
     return { username, repo };
   } catch (error) {
-    console.error("Invalid GitHub URL:", error);
+    console.error('Invalid GitHub URL:', error);
     return null;
   }
 };

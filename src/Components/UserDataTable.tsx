@@ -4,9 +4,14 @@ interface UserData {
   studentYear: string;
   username: string;
 }
-const UserDataTable = ({ email, authority, studentYear, username }: UserData) => {
+const UserDataTable = ({
+  email,
+  authority,
+  studentYear,
+  username,
+}: UserData) => {
   return (
-    <div className="userdataTable">
+    <div className='userdataTable'>
       <div>
         <span>이메일</span>
         <span>{email}</span>

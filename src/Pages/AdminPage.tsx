@@ -4,17 +4,17 @@ import {
   onAuthStateChanged,
 } from 'firebase/auth';
 import {
-  getDocs,
-  query,
+  addDoc,
   collection,
+  deleteDoc,
   doc,
+  getDoc,
+  getDocs,
+  orderBy,
+  query,
   setDoc,
   updateDoc,
   where,
-  getDoc,
-  deleteDoc,
-  orderBy,
-  addDoc,
 } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -28,8 +28,7 @@ import RequestTable from '../Components/RequestTable';
 import StaffsWord from '../Components/StaffsWord';
 import { adminApp, db } from '../firebase';
 import useAuthStore from '../store';
-import Member, { MemberDataType } from '../Types/MemberType';
-import User from '../Types/User';
+import { MemberDataType } from '../Types/MemberType';
 
 const AdminPage = () => {
   // 상태 관리
@@ -48,7 +47,7 @@ const AdminPage = () => {
   // UI 상태
 
   // 전역 상태
-  const { isLoggedIn, logout } = useAuthStore();
+  const { isLoggedIn } = useAuthStore();
 
   // router
   const navigate = useNavigate();
@@ -323,14 +322,7 @@ const AdminPage = () => {
           <p className='text-sm px-2 text-gray-600 mb-3'>
             회장과 부회장이라면 각자의 메시지를 수정할 수 있습니다.
           </p>
-          {false ? (
-            <svg
-              className='animate-pulse h-5 w-5 rounded-full bg-green-950'
-              viewBox='0 0 24 24'
-            ></svg>
-          ) : (
-            <StaffsWord id={userId} level={authorityLevel} />
-          )}
+          <StaffsWord id={userId} level={authorityLevel} />
         </div>
       );
     } else if (selectedTab === 3) {

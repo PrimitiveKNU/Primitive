@@ -1,11 +1,11 @@
 import { doc, getDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { useSpring, animated } from 'react-spring';
+import { recruitData } from '@/src/Pages/RecruitPage/data';
 import Footer from '../../Components/common/Footer';
 import NavBar from '../../Components/common/NavBar';
 import { Popup, usePopup } from '../../Components/common/popup';
 import { db } from '../../firebase';
-import { recruitData } from '@/src/Pages/RecruitPage/data';
 
 const RecruitPage = () => {
   const [showInfo, setShowInfo] = useState(false);
@@ -68,8 +68,12 @@ const RecruitPage = () => {
         if (docSnap.exists()) {
           // Firestore에서 일정을 가져온 경우
           const scheduleData = docSnap.data();
-          const [startYear, startMonth, startDay] = scheduleData.startDate.split('-').map(Number);
-          const [endYear, endMonth, endDay] = scheduleData.endDate.split('-').map(Number);
+          const [startYear, startMonth, startDay] = scheduleData.startDate
+            .split('-')
+            .map(Number);
+          const [endYear, endMonth, endDay] = scheduleData.endDate
+            .split('-')
+            .map(Number);
 
           start = new Date(startYear, startMonth - 1, startDay);
           const startTime = scheduleData.startTime || '00:00';

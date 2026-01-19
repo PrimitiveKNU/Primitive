@@ -7,9 +7,9 @@ interface GlassButtonProps {
 const GlassButton = ({ className, onClick, children }: GlassButtonProps) => {
   return (
     <button
-      type="button"
+      type='button'
       onClick={onClick}
-      className={"glassmorphism " + className}
+      className={'glassmorphism ' + className}
     >
       {children}
     </button>

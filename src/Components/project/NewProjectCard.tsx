@@ -7,7 +7,6 @@ import ProjectHoverDetail from '@/src/Components/project/ProjectHoverDetail';
 import { ProjectDetail } from '@/src/Types/ProjectType';
 import { getGitHubStars } from '@/src/Utils/githubAPI';
 
-
 interface ProjectCardProps {
   projectDetail: ProjectDetail;
 }

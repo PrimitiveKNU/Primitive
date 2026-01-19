@@ -1,6 +1,3 @@
-
-
-
 import { collection, getDocs, limit, where } from 'firebase/firestore';
 import { query } from 'firebase/firestore';
 import { useEffect, useRef, useState } from 'react';

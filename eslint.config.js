@@ -1,5 +1,6 @@
 import js from '@eslint/js';
 import importPlugin from 'eslint-plugin-import';
+import prettierPlugin from 'eslint-plugin-prettier';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import tseslint from 'typescript-eslint';
@@ -14,11 +15,13 @@ export default [
     files: ['**/*.{js,jsx,ts,tsx}'],
     plugins: {
       import: importPlugin,
+      prettier: prettierPlugin,
       react: reactPlugin,
       'react-hooks': reactHooksPlugin,
     },
     rules: {
       '@typescript-eslint/no-explicit-any': 'error',
+      'prettier/prettier': 'warn',
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
       'react-hooks/rules-of-hooks': 'error',
@@ -34,6 +37,13 @@ export default [
             'index',
             'object',
             'type',
+          ],
+          pathGroups: [
+            {
+              pattern: '@/**',
+              group: 'internal',
+              position: 'before',
+            },
           ],
           'newlines-between': 'never',
           alphabetize: {

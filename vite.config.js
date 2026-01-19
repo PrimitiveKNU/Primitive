@@ -1,14 +1,13 @@
-import path from "path";
-import react from "@vitejs/plugin-react";
-import tailwindcss from "tailwindcss";
-import { defineConfig } from "vite";
-
+import path from 'path';
+import react from '@vitejs/plugin-react';
+import tailwindcss from 'tailwindcss';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   //build 시에 모든 console.log를 제거
   build: {
-    minify: "terser",
+    minify: 'terser',
     terserOptions: {
       compress: {
         drop_console: true,
@@ -18,7 +17,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': path.join(__dirname, '/')
+      '@': path.join(__dirname, '/'),
     },
-  }
+  },
 });

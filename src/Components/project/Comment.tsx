@@ -13,13 +13,13 @@ import {
 } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import DefaultModal from '@/src/Components/common/modal/DefaultModal';
+import ModalLayout from '@/src/Components/common/modal/ModalLayout';
+import useModal from '@/src/Hooks/common/useModal';
 import Reply from './Reply';
 import { db } from '../../firebase';
 import CommentType from '../../Types/CommentType';
 import LoadingCircle from '../common/LoadingCircle';
-import DefaultModal from '@/src/Components/common/modal/DefaultModal';
-import ModalLayout from '@/src/Components/common/modal/ModalLayout';
-import useModal from '@/src/Hooks/common/useModal';
 
 interface Params {
   id: string;

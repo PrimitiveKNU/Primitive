@@ -1,10 +1,10 @@
-import { QueryDocumentSnapshot } from "firebase/firestore";
-import { useEffect, useRef, useState } from "react";
+import { QueryDocumentSnapshot } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
 
 interface UseInfiniteScrollProps {
   triggerFunction: () => void;
   isLast: boolean;
-  observeRef: React.RefObject<any>;
+  observeRef: React.RefObject<HTMLElement>;
   isLoggedIn?: boolean;
 }
 const useInfiniteScroll = ({
