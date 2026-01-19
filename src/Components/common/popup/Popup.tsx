@@ -30,7 +30,7 @@ interface PopupImageProps {
 interface PopupButtonProps {
   children: React.ReactNode;
   onClick: () => void;
-  variant?: 'primary' | 'secondary' | 'success' | 'danger';
+  variant?: 'primary' | 'secondary' | 'success' | 'danger' | 'neutral';
   color?: string;
   className?: string;
   disabled?: boolean;
@@ -99,7 +99,7 @@ const Button: React.FC<PopupButtonProps> = ({
   disabled = false,
 }) => {
   const variantClasses: Record<
-    'primary' | 'secondary' | 'success' | 'danger',
+    'primary' | 'secondary' | 'success' | 'danger' | 'neutral',
     string
   > = {
     primary:
@@ -110,6 +110,8 @@ const Button: React.FC<PopupButtonProps> = ({
       'bg-accent hover:bg-accent-600 text-accent-foreground active:bg-accent-700',
     danger:
       'bg-destructive hover:bg-destructive/90 text-destructive-foreground active:bg-destructive/80',
+    neutral:
+      'bg-gray-300 hover:bg-gray-400 text-gray-800 active:bg-gray-500',
   };
 
   const baseClasses =
