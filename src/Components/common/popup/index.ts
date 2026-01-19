@@ -1,4 +1,4 @@
-export { usePopup } from '@src/Hooks/common/usePopup';
+export { usePopup } from '@/src/Hooks/common/usePopup';
 export { Popup } from './Popup';
 export type {
   PopupButtonProps,
