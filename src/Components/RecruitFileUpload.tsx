@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 
 import { storage, db } from '../firebase';
 import { RecruitFilesData, RecruitFileInfo } from '../Types/RecruitFileType';
+import { Popup, usePopup } from '../Components/common/popup';
 
 const RecruitFileUpload = () => {
   const [selectedYear, setSelectedYear] = useState<number>(
@@ -21,6 +22,9 @@ const RecruitFileUpload = () => {
   const [uploadingOt, setUploadingOt] = useState(false);
   const [uploadProgressForm, setUploadProgressForm] = useState(0);
   const [uploadProgressOt, setUploadProgressOt] = useState(0);
+  const [popupMessage, setPopupMessage] = useState<string>('');
+  const [popupTitle, setPopupTitle] = useState<string>('');
+  const popup = usePopup();
 
   // 연도 선택 범위 설정 (현재 연도 ±3년)
   useEffect(() => {

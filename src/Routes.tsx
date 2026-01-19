@@ -10,7 +10,7 @@ import ProjectDetailPage from './Pages/ProjectDetailPage';
 import ProjectPage from './Pages/ProjectPage';
 import ProjectUploadPage from './Pages/ProjectUploadPage';
 import RecruitPage from './Pages/RecruitPage/RecruitPage';
-import TestPage from './Pages/TestPage';
+import { TestPopup } from './Pages/TestPopup';
 
 import ProtectedRoute from '@/src/Components/layout/ProtectedRoute';
 
@@ -62,7 +62,7 @@ const routes = [
   {
     element: (
       <ProtectedRoute>
-        <TestPage />
+        <TestPopup />
       </ProtectedRoute>
     ),
     path: '/test',

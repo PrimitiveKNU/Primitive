@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 
 import { db } from '../firebase';
 import { RecruitSchedule } from '../Types/RecruitFileType';
+import { Popup, usePopup } from '../Components/common/popup';
 
 const RecruitScheduleManagement = () => {
   const currentYear = new Date().getFullYear();
@@ -16,6 +17,9 @@ const RecruitScheduleManagement = () => {
   const [saving, setSaving] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const [isReadOnly, setIsReadOnly] = useState(false);
+  const [popupMessage, setPopupMessage] = useState<string>('');
+  const [popupTitle, setPopupTitle] = useState<string>('');
+  const popup = usePopup();
 
   // 연도 선택 범위 설정
   useEffect(() => {
@@ -57,7 +61,9 @@ const RecruitScheduleManagement = () => {
         }
       } catch (error) {
         console.error('모집 일정 로드 실패:', error);
-        alert('모집 일정을 로드하는 데 실패했습니다.');
+        setPopupTitle('오류');
+        setPopupMessage('모집 일정을 로드하는 데 실패했습니다.');
+        popup.open();
       } finally {
         setLoading(false);
       }
@@ -66,14 +72,20 @@ const RecruitScheduleManagement = () => {
     fetchSchedule();
   }, [selectedYear, currentYear]);
 
+  const showPopup = (title: string, message: string) => {
+    setPopupTitle(title);
+    setPopupMessage(message);
+    popup.open();
+  };
+
   const handleSave = async () => {
     if (isReadOnly) {
-      alert('과거 연도의 모집 일정은 수정할 수 없습니다.');
+      showPopup('알림', '과거 연도의 모집 일정은 수정할 수 없습니다.');
       return;
     }
 
     if (!startDate || !endDate) {
-      alert('시작 날짜와 종료 날짜를 입력해주세요.');
+      showPopup('알림', '시작 날짜와 종료 날짜를 입력해주세요.');
       return;
     }
 
@@ -82,7 +94,7 @@ const RecruitScheduleManagement = () => {
     const end = new Date(endDate);
 
     if (start > end) {
-      alert('시작 날짜가 종료 날짜보다 클 수 없습니다.');
+      showPopup('알림', '시작 날짜가 종료 날짜보다 클 수 없습니다.');
       return;
     }
 
@@ -104,10 +116,10 @@ const RecruitScheduleManagement = () => {
       });
 
       setLastUpdated(new Date());
-      alert('모집 일정이 저장되었습니다.');
+      showPopup('성공', '모집 일정이 저장되었습니다.');
     } catch (error) {
       console.error('모집 일정 저장 실패:', error);
-      alert('모집 일정 저장에 실패했습니다.');
+      showPopup('오류', '모집 일정 저장에 실패했습니다.');
     } finally {
       setSaving(false);
     }
@@ -274,6 +286,15 @@ const RecruitScheduleManagement = () => {
           </div>
         </div>
       )}
+
+      {/* Popup */}
+      <Popup isOpen={popup.isOpen} onClose={popup.close}>
+        <Popup.Title>{popupTitle}</Popup.Title>
+        <Popup.Content>{popupMessage}</Popup.Content>
+        <Popup.Button variant='primary' onClick={popup.close}>
+          확인
+        </Popup.Button>
+      </Popup>
     </div>
   );
 };
