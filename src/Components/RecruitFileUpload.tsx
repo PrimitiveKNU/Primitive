@@ -190,7 +190,7 @@ const RecruitFileUpload = () => {
           docRef,
           {
             ...currentData,
-            [`${type}File`]: undefined,
+            [`${type}File`]: deleteField(),
             updatedAt: new Date().toISOString(),
           },
           { merge: true },
