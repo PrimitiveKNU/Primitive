@@ -1,3 +1,7 @@
+import { User, getAuth } from "firebase/auth";
+import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import DeltaStatic from "quill";
 import React, {
   ChangeEvent,
   RefObject,
@@ -8,17 +12,13 @@ import React, {
   useRef,
   useState,
 } from "react";
-import NavBar from "../Components/common/NavBar";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { db, storage } from "../firebase";
-import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
-import { User, getAuth } from "firebase/auth";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import ReactQuill, { ReactQuillProps } from "react-quill";
-import DeltaStatic from "quill";
-
 import { CiImageOn } from "react-icons/ci";
 import { IoIosCheckbox, IoIosCheckboxOutline } from "react-icons/io";
+import ReactQuill, { ReactQuillProps } from "react-quill";
+import { useNavigate, useSearchParams } from "react-router-dom";
+
+import NavBar from "../Components/common/NavBar";
+import { db, storage } from "../firebase";
 
 type ReactQuillWithRefProps = ReactQuillProps & {
   forwardedRef: RefObject<ReactQuill>;

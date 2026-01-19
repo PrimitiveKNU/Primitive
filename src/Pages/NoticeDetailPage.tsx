@@ -1,12 +1,16 @@
-import { Link, useParams } from "react-router-dom";
-import Footer from "../Components/common/Footer";
-import NavBar from "../Components/common/NavBar";
-import { useEffect, useState } from "react";
-import Notice from "../Types/NoticeType";
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "../firebase";
-import LoadingCircle from "../Components/common/LoadingCircle";
+import { useEffect, useState } from "react";
 import { FaLongArrowAltLeft } from "react-icons/fa";
+import { Link, useParams } from "react-router-dom";
+
+import Footer from "../Components/common/Footer";
+import LoadingCircle from "../Components/common/LoadingCircle";
+import NavBar from "../Components/common/NavBar";
+import { db } from "../firebase";
+import Notice from "../Types/NoticeType";
+
+
+
 
 const NoticeDetailPage = () => {
   const { id } = useParams();

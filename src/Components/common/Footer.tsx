@@ -2,9 +2,11 @@
 
 import React from "react";
 import { FaInstagram, FaGithub } from "react-icons/fa";
-import logo from "../../Images/logo.webp";
-import { Link } from "react-router-dom";
 import { FaCircleInfo } from "react-icons/fa6";
+import { Link } from "react-router-dom";
+
+import logo from "../../Images/logo.webp";
+
 const Footer = () => {
   const render = () => {
     return (

@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
 import { QueryDocumentSnapshot } from "firebase/firestore";
+import { useEffect, useRef, useState } from "react";
 
 interface UseInfiniteScrollProps {
   triggerFunction: () => void;

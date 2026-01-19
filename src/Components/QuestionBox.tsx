@@ -1,9 +1,9 @@
 import { useState } from "react";
-import styled from "styled-components";
 import { FaAngleDown } from "react-icons/fa";
 import { FaAngleUp } from "react-icons/fa";
-import { keyframes } from "styled-components";
 import { animated, useSpring, config } from "react-spring";
+import { keyframes } from "styled-components";
+import styled from "styled-components";
 
 interface Question {
   question: string;

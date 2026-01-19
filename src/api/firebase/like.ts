@@ -1,4 +1,5 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
+
 import { db } from "@/src/firebase";
 
 export const getLikesCount = async (projectId: string) => {

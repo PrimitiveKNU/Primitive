@@ -1,10 +1,14 @@
+import { useEffect, useState } from 'react';
+import { FaDev } from 'react-icons/fa';
+
+import Footer from '../../Components/common/Footer';
 import NavBar from '../../Components/common/NavBar';
 import MemberCard from '../../Components/member/MemberCard';
-import Footer from '../../Components/common/Footer';
-import { data, developers } from '@/src/Pages/MembersPage/data';
-import { FaDev } from 'react-icons/fa';
-import { useEffect, useState } from 'react';
+
 import Fireworks from '@/src/Components/common/Fireworks';
+import { data, developers } from '@/src/Pages/MembersPage/data';
+
+
 
 const MembersPage = () => {
   useEffect(() => {}, []);

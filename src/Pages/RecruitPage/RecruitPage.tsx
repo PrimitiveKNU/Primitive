@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react';
-import NavBar from '../../Components/common/NavBar';
-import Footer from '../../Components/common/Footer';
-import { useSpring, animated } from 'react-spring';
-import { recruitData } from '@/src/Pages/RecruitPage/data';
 import { doc, getDoc } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
+import { useSpring, animated } from 'react-spring';
+
+import Footer from '../../Components/common/Footer';
+import NavBar from '../../Components/common/NavBar';
 import { db } from '../../firebase';
+
+import { recruitData } from '@/src/Pages/RecruitPage/data';
 
 const RecruitPage = () => {
   const [showInfo, setShowInfo] = useState(false);
@@ -59,7 +61,7 @@ const RecruitPage = () => {
         const now = new Date();
         let start: Date;
         let end: Date;
-        let weeks = ['일', '월', '화', '수', '목', '금', '토'];
+        const weeks = ['일', '월', '화', '수', '목', '금', '토'];
 
         if (docSnap.exists()) {
           // Firestore에서 일정을 가져온 경우

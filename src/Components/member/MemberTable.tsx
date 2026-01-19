@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import CheckDialog from "../common/CheckDialog";
+import { getAuth } from "firebase/auth";
 import {
   doc,
   updateDoc,
@@ -12,12 +11,14 @@ import {
   startAt,
   endAt,
 } from "firebase/firestore";
-import { db } from "../../firebase";
-import { MemberDataType } from "../../Types/MemberType";
+import { useEffect, useState } from "react";
 import { FaArrowAltCircleUp } from "react-icons/fa";
 import { FaArrowCircleDown } from "react-icons/fa";
-import { getAuth } from "firebase/auth";
 import { HiSearch } from "react-icons/hi";
+
+import { db } from "../../firebase";
+import { MemberDataType } from "../../Types/MemberType";
+import CheckDialog from "../common/CheckDialog";
 
 interface MemberTableProps {
   members: MemberDataType[];

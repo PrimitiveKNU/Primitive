@@ -1,5 +1,5 @@
-import jeongwoo from '../../Images/members/jeongwoo.webp';
 import gaeun from '../../Images/members/gaeun.webp';
+import jeongwoo from '../../Images/members/jeongwoo.webp';
 import jinseong from '../../Images/members/jinseong.webp';
 export const data = {
   presidentData: {

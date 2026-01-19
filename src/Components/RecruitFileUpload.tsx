@@ -1,11 +1,12 @@
-import { useState, useEffect } from 'react';
+import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import {
   ref,
   uploadBytesResumable,
   getDownloadURL,
   deleteObject,
 } from 'firebase/storage';
-import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { useState, useEffect } from 'react';
+
 import { storage, db } from '../firebase';
 import { RecruitFilesData, RecruitFileInfo } from '../Types/RecruitFileType';
 
