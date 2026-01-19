@@ -6,10 +6,9 @@ import {
   deleteObject,
 } from 'firebase/storage';
 import { useState, useEffect } from 'react';
-
+import { Popup, usePopup } from '../Components/common/popup';
 import { storage, db } from '../firebase';
 import { RecruitFilesData, RecruitFileInfo } from '../Types/RecruitFileType';
-import { Popup, usePopup } from '../Components/common/popup';
 
 const RecruitFileUpload = () => {
   const [selectedYear, setSelectedYear] = useState<number>(
@@ -96,7 +95,7 @@ const RecruitFileUpload = () => {
         },
         (error) => {
           console.error('업로드 중 오류:', error);
-          alert('파일 업로드에 실패했습니다.');
+          showPopup('오류', '파일 업로드에 실패했습니다.');
         },
         async () => {
           // 업로드 완료
@@ -133,14 +132,14 @@ const RecruitFileUpload = () => {
             };
           });
 
-          alert('파일이 성공적으로 업로드되었습니다.');
+          showPopup('성공', '파일이 성공적으로 업로드되었습니다.');
           setProgress(0);
           setUploading(false);
         }
       );
     } catch (error) {
       console.error('파일 업로드 실패:', error);
-      alert('파일 업로드 중 오류가 발생했습니다.');
+      showPopup('오류', '파일 업로드 중 오류가 발생했습니다.');
       setUploading(false);
     }
   };
@@ -183,11 +182,17 @@ const RecruitFileUpload = () => {
         };
       });
 
-      alert('파일이 삭제되었습니다.');
+      showPopup('성공', '파일이 삭제되었습니다.');
     } catch (error) {
       console.error('파일 삭제 실패:', error);
-      alert('파일 삭제 중 오류가 발생했습니다.');
+      showPopup('오류', '파일 삭제 중 오류가 발생했습니다.');
     }
+  };
+
+  const showPopup = (title: string, message: string) => {
+    setPopupTitle(title);
+    setPopupMessage(message);
+    popup.open();
   };
 
   const formatDate = (dateString: string | Date | undefined) => {
@@ -319,7 +324,7 @@ const RecruitFileUpload = () => {
                 const file = e.target.files?.[0];
                 if (file) {
                   if (file.size > 10 * 1024 * 1024) {
-                    alert('파일 크기가 10MB를 초과합니다.');
+                    showPopup('알림', '파일 크기가 10MB를 초과합니다.');
                     return;
                   }
                   uploadFile(
@@ -366,7 +371,7 @@ const RecruitFileUpload = () => {
                 const file = e.target.files?.[0];
                 if (file) {
                   if (file.size > 10 * 1024 * 1024) {
-                    alert('파일 크기가 10MB를 초과합니다.');
+                    showPopup('알림', '파일 크기가 10MB를 초과합니다.');
                     return;
                   }
                   uploadFile(file, 'ot', setUploadingOt, setUploadProgressOt);
@@ -390,6 +395,15 @@ const RecruitFileUpload = () => {
           )}
         </div>
       </div>
+
+      {/* Popup */}
+      <Popup isOpen={popup.isOpen} onClose={popup.close}>
+        <Popup.Title>{popupTitle}</Popup.Title>
+        <Popup.Content>{popupMessage}</Popup.Content>
+        <Popup.Button variant='primary' onClick={popup.close}>
+          확인
+        </Popup.Button>
+      </Popup>
     </div>
   );
 };

@@ -1,5 +1,4 @@
 import { Crown } from 'lucide-react';
-
 import { Popup, usePopup } from '@/src/Components/common/popup';
 
 export const TestPopup = () => {

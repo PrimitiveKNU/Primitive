@@ -2,7 +2,6 @@ import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { FaLongArrowAltLeft } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
-
 import Footer from "../Components/common/Footer";
 import LoadingCircle from "../Components/common/LoadingCircle";
 import NavBar from "../Components/common/NavBar";

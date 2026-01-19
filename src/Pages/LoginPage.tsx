@@ -1,5 +1,4 @@
 import NavBar from "../Components/common/NavBar";
-
 import AuthForm from "@/src/Components/auth/AuthForm";
 
 const LoginPage = () => {

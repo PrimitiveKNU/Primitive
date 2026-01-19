@@ -1,17 +1,14 @@
 
 
 
-import ActivityCard from './ActivityCard';
 import { collection, getDocs, limit, where } from 'firebase/firestore';
-import { db } from '../../firebase';
 import { query } from 'firebase/firestore';
 import { useEffect, useRef, useState } from 'react';
-import { ProjectDetail } from '../../Types/ProjectType';
-
 import { FaArrowRight } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import ActivityCard from './ActivityCard';
 import Cover from './Cover';
-
+import { db } from '../../firebase';
 import Introduction1 from '../../Images/2024/1.webp';
 import Introduction2 from '../../Images/2024/2.webp';
 import Introduction3 from '../../Images/2024/3.webp';
@@ -19,6 +16,7 @@ import Introduction4 from '../../Images/2024/4.webp';
 import project3 from '../../Images/2024/뜨개랑.webp';
 import project2 from '../../Images/2024/솜뭉치.webp';
 import project1 from '../../Images/2024/에코초이스.webp';
+import { ProjectDetail } from '../../Types/ProjectType';
 import ProjectCard from '../project/ProjectCard';
 
 const Intro = () => {

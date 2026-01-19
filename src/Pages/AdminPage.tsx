@@ -18,7 +18,6 @@ import {
 } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import Footer from '../Components/common/Footer';
 import NavBar from '../Components/common/NavBar';
 import MemberTable from '../Components/member/MemberTable';

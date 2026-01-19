@@ -1,11 +1,8 @@
 import { useState } from "react";
 import { HiLockClosed } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
-
 import logo from "../../Images/logo.webp";
 import ProjectType from "../../Types/ProjectType";
-
-
 import LoadingSpinner from "@/src/Components/common/loading/LoadingSpinner";
 import { formatTimeDifference } from "@/src/Utils/timeFormat";
 

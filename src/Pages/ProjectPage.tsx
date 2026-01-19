@@ -11,7 +11,6 @@ import {
 } from 'firebase/firestore';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-
 import Footer from '../Components/common/Footer';
 import LoadingCircle from '../Components/common/LoadingCircle';
 import NavBar from '../Components/common/NavBar';
@@ -19,9 +18,7 @@ import ScrollToTop from '../Components/common/ScrollToTop';
 import { db } from '../firebase';
 import useAuthStore from '../store';
 import { Filter, ProjectDetail } from '../Types/ProjectType';
-
 import { getLikesCount } from '@/src/api/firebase/like';
-import GlassButton from '@/src/Components/common/button/GlassButton';
 import Skeleton from '@/src/Components/common/Skeleton';
 import FilterContainer from '@/src/Components/project/FilterContainer';
 import NewProjectCard from '@/src/Components/project/NewProjectCard';

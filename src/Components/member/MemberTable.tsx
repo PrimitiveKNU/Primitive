@@ -15,7 +15,6 @@ import { useEffect, useState } from "react";
 import { FaArrowAltCircleUp } from "react-icons/fa";
 import { FaArrowCircleDown } from "react-icons/fa";
 import { HiSearch } from "react-icons/hi";
-
 import { db } from "../../firebase";
 import { MemberDataType } from "../../Types/MemberType";
 import CheckDialog from "../common/CheckDialog";

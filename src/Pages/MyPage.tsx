@@ -12,7 +12,6 @@ import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { HiPlusSmall } from 'react-icons/hi2';
 import { Link, useNavigate } from 'react-router-dom';
-
 import Footer from '../Components/common/Footer';
 import LoadingCircle from '../Components/common/LoadingCircle';
 import NavBar from '../Components/common/NavBar';
@@ -21,7 +20,6 @@ import UserDataTable from '../Components/UserDataTable';
 import { db, storage } from '../firebase';
 import logo from '../Images/logo.webp';
 import useAuthStore from '../store';
-
 import { ProjectDetail } from '../Types/ProjectType';
 import User from '../Types/User.d';
 

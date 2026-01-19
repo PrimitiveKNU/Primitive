@@ -11,7 +11,6 @@ import ProjectPage from './Pages/ProjectPage';
 import ProjectUploadPage from './Pages/ProjectUploadPage';
 import RecruitPage from './Pages/RecruitPage/RecruitPage';
 import { TestPopup } from './Pages/TestPopup';
-
 import ProtectedRoute from '@/src/Components/layout/ProtectedRoute';
 
 const routes = [

@@ -1,11 +1,10 @@
 import { doc, getDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { useSpring, animated } from 'react-spring';
-
 import Footer from '../../Components/common/Footer';
 import NavBar from '../../Components/common/NavBar';
+import { Popup, usePopup } from '../../Components/common/popup';
 import { db } from '../../firebase';
-
 import { recruitData } from '@/src/Pages/RecruitPage/data';
 
 const RecruitPage = () => {
@@ -18,6 +17,9 @@ const RecruitPage = () => {
   const [otURL, setOtURL] = useState<string>(recruitData.ot);
   const [formFileName, setFormFileName] = useState<string>('모집신청서.hwp');
   const [otFileName, setOtFileName] = useState<string>('OT자료.pdf');
+  const [popupMessage, setPopupMessage] = useState<string>('');
+  const [popupTitle, setPopupTitle] = useState<string>('');
+  const popup = usePopup();
 
   // Firestore에서 동적으로 파일 정보 로드
   useEffect(() => {
@@ -165,7 +167,9 @@ const RecruitPage = () => {
       window.URL.revokeObjectURL(url);
     } catch (error) {
       console.error('파일 다운로드 실패:', error);
-      alert('파일 다운로드에 실패했습니다.');
+      setPopupTitle('오류');
+      setPopupMessage('파일 다운로드에 실패했습니다.');
+      popup.open();
     }
   };
 
@@ -270,6 +274,15 @@ const RecruitPage = () => {
         </div>
       </div>
       <Footer />
+
+      {/* Popup */}
+      <Popup isOpen={popup.isOpen} onClose={popup.close}>
+        <Popup.Title>{popupTitle}</Popup.Title>
+        <Popup.Content>{popupMessage}</Popup.Content>
+        <Popup.Button variant='primary' onClick={popup.close}>
+          확인
+        </Popup.Button>
+      </Popup>
     </div>
   );
 };

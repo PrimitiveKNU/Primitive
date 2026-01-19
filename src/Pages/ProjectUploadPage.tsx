@@ -16,6 +16,7 @@ import ReactQuill, { ReactQuillProps } from 'react-quill';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import NavBar from '../Components/common/NavBar';
 import { db, storage } from '../firebase';
+
 type ReactQuillWithRefProps = ReactQuillProps & {
   forwardedRef: RefObject<ReactQuill>;
 };
@@ -118,7 +119,7 @@ const ProjectUploadPage = () => {
   useEffect(() => {
     if (editorRef.current) {
       const editor = editorRef.current.getEditor();
-      editor.setContents(initialContents as DeltaStatic);
+      editor.setContents(initialContents as Delta.Static);
     }
   }, [initialContents]);
 
@@ -259,7 +260,6 @@ const ProjectUploadPage = () => {
       const file = e.target.files?.[0];
       const maxSize =
         import.meta.VITE_FB_UPLOAD_SIZE_LIMIT * 1024 * 1024 || 5 * 1024 * 1024;
-      import { DeltaStatic } from 'quill';
 
       if (!file) {
         return;

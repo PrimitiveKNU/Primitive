@@ -19,26 +19,17 @@ import { HiLink } from "react-icons/hi";
 import { HiHeart, HiShare, HiOutlineHeart } from "react-icons/hi2";
 import { IoLogoGithub } from "react-icons/io";
 import { useNavigate, useParams } from "react-router-dom";
-
 import CheckDialog from "../Components/common/CheckDialog";
 import Footer from "../Components/common/Footer";
+import ImageDetailView from "../Components/common/ImageDetailView";
 import LoadingCircle from "../Components/common/LoadingCircle";
 import NavBar from "../Components/common/NavBar";
-
-
+import ScrollToTop from "../Components/common/ScrollToTop";
 import Comment from "../Components/project/Comment";
 import { db } from "../firebase";
 import thumbnailEx from "../Images/2024/에코초이스.webp";
-
-
 import CommentType from "../Types/CommentType";
 import ProjectType, { ProjectDetail } from "../Types/ProjectType";
-
-
-import ImageDetailView from "../Components/common/ImageDetailView";
-import ScrollToTop from "../Components/common/ScrollToTop";
-
-
 import { getLikesCount } from "@/src/api/firebase/like";
 
 const ProjectDetailPage = () => {

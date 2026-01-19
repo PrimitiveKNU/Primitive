@@ -1,10 +1,10 @@
+export { usePopup } from '@src/Hooks/common/usePopup';
 export { Popup } from './Popup';
 export type {
-  PopupProps,
-  PopupTitleProps,
-  PopupSubtitleProps,
-  PopupImageProps,
   PopupButtonProps,
   PopupContentProps,
+  PopupImageProps,
+  PopupProps,
+  PopupSubtitleProps,
+  PopupTitleProps,
 } from './Popup';
-export { usePopup } from '@/Hooks/common/usePopup';
