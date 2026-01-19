@@ -2,12 +2,11 @@ import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import app, { db } from '@/src/firebase';
 import useAuthStore from '@/src/store';
 
 const useAuthenticate = () => {
-  const { isLoggedIn, login } = useAuthStore();
+  const { login } = useAuthStore();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

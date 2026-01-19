@@ -1,16 +1,12 @@
-import { doc, getDoc } from "firebase/firestore";
-import { useEffect, useState } from "react";
-import { FaLongArrowAltLeft } from "react-icons/fa";
-import { Link, useParams } from "react-router-dom";
-
-import Footer from "../Components/common/Footer";
-import LoadingCircle from "../Components/common/LoadingCircle";
-import NavBar from "../Components/common/NavBar";
-import { db } from "../firebase";
-import Notice from "../Types/NoticeType";
-
-
-
+import { doc, getDoc } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
+import { FaLongArrowAltLeft } from 'react-icons/fa';
+import { Link, useParams } from 'react-router-dom';
+import Footer from '../Components/common/Footer';
+import LoadingCircle from '../Components/common/LoadingCircle';
+import NavBar from '../Components/common/NavBar';
+import { db } from '../firebase';
+import Notice from '../Types/NoticeType';
 
 const NoticeDetailPage = () => {
   const { id } = useParams();
@@ -30,13 +26,13 @@ const NoticeDetailPage = () => {
   // Method
   const getNoticeDetail = async () => {
     try {
-      const docRef = doc(db, "notices", id!);
+      const docRef = doc(db, 'notices', id!);
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
         const data = {
           id: docSnap.id,
-          ...(docSnap.data() as Omit<Notice, "id">),
+          ...(docSnap.data() as Omit<Notice, 'id'>),
         };
         setNotice(data);
         setNoticeLoading(false);
@@ -48,22 +44,26 @@ const NoticeDetailPage = () => {
   };
 
   return (
-    <section className="flex flex-col min-h-screen  justify-between bg-white text-black">
+    <section className='flex flex-col min-h-screen  justify-between bg-white text-black'>
       <NavBar />
       {!noticeLoading && notice ? (
-        <div className="relative mt-10 md:mt-20 max-w-6xl mx-auto w-full flex-grow flex flex-col items-stretch p-5 md:p-10 gap-2">
-          <span className="text-gray-500">{notice.category}</span>
-          <h1 className="text-2xl md:text-3xl lg:text-5xl font-bold mb-4">{notice.title}</h1>
-          <p className="text-gray-600 mb-2">
-            {notice.date ? new Date(notice.date.toDate()).toLocaleString() : "알 수 없음"}
+        <div className='relative mt-10 md:mt-20 max-w-6xl mx-auto w-full flex-grow flex flex-col items-stretch p-5 md:p-10 gap-2'>
+          <span className='text-gray-500'>{notice.category}</span>
+          <h1 className='text-2xl md:text-3xl lg:text-5xl font-bold mb-4'>
+            {notice.title}
+          </h1>
+          <p className='text-gray-600 mb-2'>
+            {notice.date
+              ? new Date(notice.date.toDate()).toLocaleString()
+              : '알 수 없음'}
           </p>
-          <hr className="my-8" />
-          <div className="prose max-w-none pb-20 whitespace-pre-wrap">
+          <hr className='my-8' />
+          <div className='prose max-w-none pb-20 whitespace-pre-wrap'>
             <p>{notice.content}</p>
           </div>
           <Link
-            to="/notice"
-            className="inline-flex mt-8 text-black hover:underline font-bold  items-center gap-2"
+            to='/notice'
+            className='inline-flex mt-8 text-black hover:underline font-bold  items-center gap-2'
           >
             <FaLongArrowAltLeft size={20} />
             목록으로

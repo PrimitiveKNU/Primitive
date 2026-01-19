@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 interface ActivityCardStyledProps {
   $backgroundImage?: string;
@@ -32,7 +32,7 @@ const ActivityCardStyled = styled.div<ActivityCardStyledProps>`
   }
 
   &:before {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
@@ -43,7 +43,7 @@ const ActivityCardStyled = styled.div<ActivityCardStyledProps>`
   }
 
   background-image: ${(props) =>
-    props.$backgroundImage ? `url(${props.$backgroundImage})` : "none"};
+    props.$backgroundImage ? `url(${props.$backgroundImage})` : 'none'};
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -55,9 +55,16 @@ interface ActivityCardProps {
   backgroundImage?: string;
 }
 
-const ActivityCard = ({ className, children, backgroundImage }: ActivityCardProps) => {
+const ActivityCard = ({
+  className,
+  children,
+  backgroundImage,
+}: ActivityCardProps) => {
   return (
-    <ActivityCardStyled className={className} $backgroundImage={backgroundImage}>
+    <ActivityCardStyled
+      className={className}
+      $backgroundImage={backgroundImage}
+    >
       {children}
     </ActivityCardStyled>
   );

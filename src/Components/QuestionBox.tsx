@@ -1,9 +1,6 @@
-import { useState } from "react";
-import { FaAngleDown } from "react-icons/fa";
-import { FaAngleUp } from "react-icons/fa";
-import { animated, useSpring, config } from "react-spring";
-import { keyframes } from "styled-components";
-import styled from "styled-components";
+import { useState } from 'react';
+import { FaAngleDown, FaAngleUp } from 'react-icons/fa';
+import { animated, useSpring } from 'react-spring';
 
 interface Question {
   question: string;
@@ -38,22 +35,24 @@ const QuestionBox = ({ question, answer }: Question) => {
 
   return (
     <div
-      className="md:text-lg text-sm questionBox"
-      style={{ backgroundColor: isOpen ? "#2a2d32" : "white" }}
+      className='md:text-lg text-sm questionBox'
+      style={{ backgroundColor: isOpen ? '#2a2d32' : 'white' }}
       onClick={() => {
         handleClick();
         setIsOpen((p) => !p);
       }}
     >
-      <div className="flex justify-between items-center">
-        <div className={`flex gap-1 ${isOpen ? "text-white" : "text-black"} `}>
+      <div className='flex justify-between items-center'>
+        <div className={`flex gap-1 ${isOpen ? 'text-white' : 'text-black'} `}>
           <span>Q : </span>
           <p className={`flex-1 `}>{question}</p>
         </div>
         <div>{isOpen ? <FaAngleUp /> : <FaAngleDown />}</div>
       </div>
 
-      <animated.div style={{ color: "black", backgroundColor: "white", ...springs }}>
+      <animated.div
+        style={{ color: 'black', backgroundColor: 'white', ...springs }}
+      >
         <p>A : {answer}</p>
       </animated.div>
     </div>

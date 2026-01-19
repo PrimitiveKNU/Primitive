@@ -1,8 +1,3 @@
-import { HiPencilSquare } from 'react-icons/hi2';
-import { Link } from 'react-router-dom';
-
-import { Filter } from '@/src/Types/ProjectType';
-
 const ProjectHeader = () => {
   return (
     <>

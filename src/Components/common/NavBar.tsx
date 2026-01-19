@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { IoMenuOutline } from 'react-icons/io5';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSpring, animated } from 'react-spring';
-
 import useAuthStore from '../../store';
 import styles from '../../Styles/menu.module.css';
 

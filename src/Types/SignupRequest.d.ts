@@ -4,5 +4,5 @@ interface SignupRequest {
   password?: string;
   username?: string;
   studentYear?: string;
-  status?: "approved" | "rejected" | "pending";
+  status?: 'approved' | 'rejected' | 'pending';
 }

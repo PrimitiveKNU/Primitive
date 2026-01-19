@@ -1,18 +1,18 @@
-import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { deleteField, doc, getDoc, setDoc } from 'firebase/firestore';
 import {
+  deleteObject,
+  getDownloadURL,
   ref,
   uploadBytesResumable,
-  getDownloadURL,
-  deleteObject,
 } from 'firebase/storage';
-import { useState, useEffect } from 'react';
-
-import { storage, db } from '../firebase';
-import { RecruitFilesData, RecruitFileInfo } from '../Types/RecruitFileType';
+import { useEffect, useState } from 'react';
+import { Popup, usePopup } from '../Components/common/popup';
+import { db, storage } from '../firebase';
+import { RecruitFilesData } from '../Types/RecruitFileType';
 
 const RecruitFileUpload = () => {
   const [selectedYear, setSelectedYear] = useState<number>(
-    new Date().getFullYear()
+    new Date().getFullYear(),
   );
   const [years, setYears] = useState<number[]>([]);
   const [recruitData, setRecruitData] = useState<RecruitFilesData | null>(null);
@@ -21,6 +21,13 @@ const RecruitFileUpload = () => {
   const [uploadingOt, setUploadingOt] = useState(false);
   const [uploadProgressForm, setUploadProgressForm] = useState(0);
   const [uploadProgressOt, setUploadProgressOt] = useState(0);
+  const [popupMessage, setPopupMessage] = useState<string>('');
+  const [popupTitle, setPopupTitle] = useState<string>('');
+  const popup = usePopup();
+  const [pendingDeleteType, setPendingDeleteType] = useState<
+    'form' | 'ot' | null
+  >(null);
+  const deleteConfirmDialog = usePopup();
 
   // 연도 선택 범위 설정 (현재 연도 ±3년)
   useEffect(() => {
@@ -64,7 +71,7 @@ const RecruitFileUpload = () => {
     file: File,
     type: 'form' | 'ot',
     setUploading: (state: boolean) => void,
-    setProgress: (progress: number) => void
+    setProgress: (progress: number) => void,
   ) => {
     if (!file) return;
 
@@ -78,6 +85,7 @@ const RecruitFileUpload = () => {
         await deleteObject(storageRef);
       } catch (e) {
         // 파일이 없는 경우 무시
+        console.error('기존 파일 삭제 실패 (무시됨):', e);
       }
 
       // 파일 업로드
@@ -92,7 +100,7 @@ const RecruitFileUpload = () => {
         },
         (error) => {
           console.error('업로드 중 오류:', error);
-          alert('파일 업로드에 실패했습니다.');
+          showPopup('오류', '파일 업로드에 실패했습니다.');
         },
         async () => {
           // 업로드 완료
@@ -112,7 +120,7 @@ const RecruitFileUpload = () => {
               },
               updatedAt: new Date().toISOString(),
             },
-            { merge: true }
+            { merge: true },
           );
 
           // UI 업데이트
@@ -129,30 +137,48 @@ const RecruitFileUpload = () => {
             };
           });
 
-          alert('파일이 성공적으로 업로드되었습니다.');
+          showPopup('성공', '파일이 성공적으로 업로드되었습니다.');
           setProgress(0);
           setUploading(false);
-        }
+        },
       );
     } catch (error) {
       console.error('파일 업로드 실패:', error);
-      alert('파일 업로드 중 오류가 발생했습니다.');
+      showPopup('오류', '파일 업로드 중 오류가 발생했습니다.');
       setUploading(false);
     }
   };
 
-  const deleteFile = async (type: 'form' | 'ot') => {
-    if (
-      !confirm(
-        `${type === 'form' ? '모집 신청서' : 'OT 자료'}를 삭제하시겠습니까?`
-      )
-    ) {
-      return;
-    }
+  const openDeleteConfirm = (type: 'form' | 'ot') => {
+    setPendingDeleteType(type);
+    deleteConfirmDialog.open();
+  };
+
+  const confirmDelete = async () => {
+    if (!pendingDeleteType) return;
+
+    const type = pendingDeleteType;
+    deleteConfirmDialog.close();
 
     try {
       const storageRef = ref(storage, `recruit-files/${selectedYear}/${type}`);
-      await deleteObject(storageRef);
+
+      // Storage에서 파일 삭제 (파일이 없어도 무시)
+      try {
+        await deleteObject(storageRef);
+      } catch (error) {
+        // 파일이 없는 경우(object-not-found) 무시
+        if (
+          error instanceof Error &&
+          'code' in error &&
+          error.code !== 'storage/object-not-found'
+        ) {
+          throw error;
+        }
+        console.log(
+          `파일이 존재하지 않습니다: recruit-files/${selectedYear}/${type}`,
+        );
+      }
 
       // Firestore에서 메타데이터 삭제
       const docRef = doc(db, 'recruitFiles', selectedYear.toString());
@@ -164,10 +190,10 @@ const RecruitFileUpload = () => {
           docRef,
           {
             ...currentData,
-            [`${type}File`]: undefined,
+            [`${type}File`]: deleteField(),
             updatedAt: new Date().toISOString(),
           },
-          { merge: true }
+          { merge: true },
         );
       }
 
@@ -179,11 +205,19 @@ const RecruitFileUpload = () => {
         };
       });
 
-      alert('파일이 삭제되었습니다.');
+      showPopup('성공', '파일이 삭제되었습니다.');
+      setPendingDeleteType(null);
     } catch (error) {
       console.error('파일 삭제 실패:', error);
-      alert('파일 삭제 중 오류가 발생했습니다.');
+      showPopup('오류', '파일 삭제 중 오류가 발생했습니다.');
+      setPendingDeleteType(null);
     }
+  };
+
+  const showPopup = (title: string, message: string) => {
+    setPopupTitle(title);
+    setPopupMessage(message);
+    popup.open();
   };
 
   const formatDate = (dateString: string | Date | undefined) => {
@@ -250,12 +284,14 @@ const RecruitFileUpload = () => {
                     </p>
                   </div>
                 ) : (
-                  <p className='text-xs text-gray-500 mt-1'>업로드된 파일 없음</p>
+                  <p className='text-xs text-gray-500 mt-1'>
+                    업로드된 파일 없음
+                  </p>
                 )}
               </div>
               {recruitData?.formFile && (
                 <button
-                  onClick={() => deleteFile('form')}
+                  onClick={() => openDeleteConfirm('form')}
                   className='ml-4 px-3 py-1 text-xs bg-red-500 hover:bg-red-600 text-white rounded'
                 >
                   삭제
@@ -279,12 +315,14 @@ const RecruitFileUpload = () => {
                     </p>
                   </div>
                 ) : (
-                  <p className='text-xs text-gray-500 mt-1'>업로드된 파일 없음</p>
+                  <p className='text-xs text-gray-500 mt-1'>
+                    업로드된 파일 없음
+                  </p>
                 )}
               </div>
               {recruitData?.otFile && (
                 <button
-                  onClick={() => deleteFile('ot')}
+                  onClick={() => openDeleteConfirm('ot')}
                   className='ml-4 px-3 py-1 text-xs bg-red-500 hover:bg-red-600 text-white rounded'
                 >
                   삭제
@@ -315,14 +353,14 @@ const RecruitFileUpload = () => {
                 const file = e.target.files?.[0];
                 if (file) {
                   if (file.size > 10 * 1024 * 1024) {
-                    alert('파일 크기가 10MB를 초과합니다.');
+                    showPopup('알림', '파일 크기가 10MB를 초과합니다.');
                     return;
                   }
                   uploadFile(
                     file,
                     'form',
                     setUploadingForm,
-                    setUploadProgressForm
+                    setUploadProgressForm,
                   );
                 }
               }}
@@ -362,7 +400,7 @@ const RecruitFileUpload = () => {
                 const file = e.target.files?.[0];
                 if (file) {
                   if (file.size > 10 * 1024 * 1024) {
-                    alert('파일 크기가 10MB를 초과합니다.');
+                    showPopup('알림', '파일 크기가 10MB를 초과합니다.');
                     return;
                   }
                   uploadFile(file, 'ot', setUploadingOt, setUploadProgressOt);
@@ -386,6 +424,35 @@ const RecruitFileUpload = () => {
           )}
         </div>
       </div>
+
+      {/* Popup - 일반 메시지 */}
+      <Popup isOpen={popup.isOpen} onClose={popup.close}>
+        <Popup.Title>{popupTitle}</Popup.Title>
+        <Popup.Content>{popupMessage}</Popup.Content>
+        <Popup.Button variant='primary' onClick={popup.close}>
+          확인
+        </Popup.Button>
+      </Popup>
+
+      {/* Popup - 삭제 확인 */}
+      <Popup
+        isOpen={deleteConfirmDialog.isOpen}
+        onClose={deleteConfirmDialog.close}
+      >
+        <Popup.Title>파일 삭제</Popup.Title>
+        <Popup.Content>
+          {pendingDeleteType === 'form' ? '모집 신청서' : 'OT 자료'}를
+          삭제하시겠습니까?
+        </Popup.Content>
+        <div className='flex gap-3'>
+          <Popup.Button variant='neutral' onClick={deleteConfirmDialog.close}>
+            취소
+          </Popup.Button>
+          <Popup.Button variant='danger' onClick={confirmDelete}>
+            삭제
+          </Popup.Button>
+        </div>
+      </Popup>
     </div>
   );
 };

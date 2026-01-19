@@ -11,7 +11,6 @@ interface DefaultModalProps {
 const DefaultModal = ({
   title,
   subTitle,
-  toggleModal,
   confirm,
   cancel,
 }: DefaultModalProps) => {

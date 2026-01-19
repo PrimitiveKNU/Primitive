@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-
-import CheckDialog from "./common/CheckDialog";
+import React, { useState } from 'react';
+import CheckDialog from './common/CheckDialog';
 
 interface RequestTableProps {
   requests: SignupRequest[];
@@ -9,9 +8,10 @@ interface RequestTableProps {
 }
 const RequestTable = ({ requests, onApprove, onDelete }: RequestTableProps) => {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [selectedRequest, setSelectedRequest] = useState<SignupRequest | null>();
+  const [selectedRequest, setSelectedRequest] =
+    useState<SignupRequest | null>();
   return (
-    <table className="requestTable">
+    <table className='requestTable'>
       <thead>
         <tr>
           <th>Index</th>
@@ -32,7 +32,7 @@ const RequestTable = ({ requests, onApprove, onDelete }: RequestTableProps) => {
               <td>{request.email}</td>
               <td>
                 <button
-                  className="bg-emerald-300 px-2 py-1.5 rounded-md text-black hover:shadow-lg hover:bg-emerald-400 text-sm text-nowrap"
+                  className='bg-emerald-300 px-2 py-1.5 rounded-md text-black hover:shadow-lg hover:bg-emerald-400 text-sm text-nowrap'
                   onClick={() => onApprove(request)}
                 >
                   수락
@@ -40,7 +40,7 @@ const RequestTable = ({ requests, onApprove, onDelete }: RequestTableProps) => {
               </td>
               <td>
                 <button
-                  className="bg-red-300 px-2 py-1.5 rounded-md hover:bg-red-400 hover:shadow-lg text-sm text-nowrap"
+                  className='bg-red-300 px-2 py-1.5 rounded-md hover:bg-red-400 hover:shadow-lg text-sm text-nowrap'
                   onClick={() => {
                     setSelectedRequest(request);
                     setDialogOpen(true);
@@ -53,7 +53,7 @@ const RequestTable = ({ requests, onApprove, onDelete }: RequestTableProps) => {
           ))
         ) : (
           <tr>
-            <td colSpan={6} className="w-full text-center py-6">
+            <td colSpan={6} className='w-full text-center py-6'>
               아무런 회원 가입 요청이 없습니다.. 🥲
             </td>
           </tr>
@@ -61,8 +61,8 @@ const RequestTable = ({ requests, onApprove, onDelete }: RequestTableProps) => {
       </tbody>
       {dialogOpen && (
         <CheckDialog
-          message="가입 요청을 거절하시겠습니까?"
-          btnColor="red"
+          message='가입 요청을 거절하시겠습니까?'
+          btnColor='red'
           onConfirm={() => {
             if (selectedRequest) {
               onDelete(selectedRequest);

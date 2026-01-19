@@ -11,7 +11,13 @@ import {
 } from 'firebase/firestore';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-
+import { getLikesCount } from '@/src/api/firebase/like';
+import Skeleton from '@/src/Components/common/Skeleton';
+import NewProjectCard from '@/src/Components/project/NewProjectCard';
+import ProjectGridLayout from '@/src/Components/project/ProjectGridLayout';
+import ProjectHeader from '@/src/Components/project/ProjectHeader';
+import ProjectSearchBar from '@/src/Components/project/ProjectSearchBar';
+import useInfiniteScroll from '@/src/Hooks/common/useInfiniteScroll';
 import Footer from '../Components/common/Footer';
 import LoadingCircle from '../Components/common/LoadingCircle';
 import NavBar from '../Components/common/NavBar';
@@ -20,16 +26,6 @@ import { db } from '../firebase';
 import useAuthStore from '../store';
 import { Filter, ProjectDetail } from '../Types/ProjectType';
 
-import { getLikesCount } from '@/src/api/firebase/like';
-import GlassButton from '@/src/Components/common/button/GlassButton';
-import Skeleton from '@/src/Components/common/Skeleton';
-import FilterContainer from '@/src/Components/project/FilterContainer';
-import NewProjectCard from '@/src/Components/project/NewProjectCard';
-import ProjectGridLayout from '@/src/Components/project/ProjectGridLayout';
-import ProjectHeader from '@/src/Components/project/ProjectHeader';
-import ProjectSearchBar from '@/src/Components/project/ProjectSearchBar';
-import useInfiniteScroll from '@/src/Hooks/common/useInfiniteScroll';
-
 type MyIndexType = {
   team: QueryFieldFilterConstraint;
   personal: QueryFieldFilterConstraint;
@@ -37,8 +33,10 @@ type MyIndexType = {
 };
 
 // filterKind가 Filter 타입인지 확인하는 함수
-const isFilter = (value: any): value is Filter => {
-  return ['default', 'app', 'web', 'personal', 'team', 'my'].includes(value);
+const isFilter = (value: unknown): value is Filter => {
+  return ['default', 'app', 'web', 'personal', 'team', 'my'].includes(
+    value as string,
+  );
 };
 
 const ProjectPage = () => {

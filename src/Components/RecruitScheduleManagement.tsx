@@ -1,6 +1,6 @@
-import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
-import { useState, useEffect } from 'react';
-
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
+import { Popup, usePopup } from '../Components/common/popup';
 import { db } from '../firebase';
 import { RecruitSchedule } from '../Types/RecruitFileType';
 
@@ -16,6 +16,9 @@ const RecruitScheduleManagement = () => {
   const [saving, setSaving] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const [isReadOnly, setIsReadOnly] = useState(false);
+  const [popupMessage, setPopupMessage] = useState<string>('');
+  const [popupTitle, setPopupTitle] = useState<string>('');
+  const popup = usePopup();
 
   // 연도 선택 범위 설정
   useEffect(() => {
@@ -57,7 +60,9 @@ const RecruitScheduleManagement = () => {
         }
       } catch (error) {
         console.error('모집 일정 로드 실패:', error);
-        alert('모집 일정을 로드하는 데 실패했습니다.');
+        setPopupTitle('오류');
+        setPopupMessage('모집 일정을 로드하는 데 실패했습니다.');
+        popup.open();
       } finally {
         setLoading(false);
       }
@@ -66,14 +71,20 @@ const RecruitScheduleManagement = () => {
     fetchSchedule();
   }, [selectedYear, currentYear]);
 
+  const showPopup = (title: string, message: string) => {
+    setPopupTitle(title);
+    setPopupMessage(message);
+    popup.open();
+  };
+
   const handleSave = async () => {
     if (isReadOnly) {
-      alert('과거 연도의 모집 일정은 수정할 수 없습니다.');
+      showPopup('알림', '과거 연도의 모집 일정은 수정할 수 없습니다.');
       return;
     }
 
     if (!startDate || !endDate) {
-      alert('시작 날짜와 종료 날짜를 입력해주세요.');
+      showPopup('알림', '시작 날짜와 종료 날짜를 입력해주세요.');
       return;
     }
 
@@ -82,7 +93,7 @@ const RecruitScheduleManagement = () => {
     const end = new Date(endDate);
 
     if (start > end) {
-      alert('시작 날짜가 종료 날짜보다 클 수 없습니다.');
+      showPopup('알림', '시작 날짜가 종료 날짜보다 클 수 없습니다.');
       return;
     }
 
@@ -104,10 +115,10 @@ const RecruitScheduleManagement = () => {
       });
 
       setLastUpdated(new Date());
-      alert('모집 일정이 저장되었습니다.');
+      showPopup('성공', '모집 일정이 저장되었습니다.');
     } catch (error) {
       console.error('모집 일정 저장 실패:', error);
-      alert('모집 일정 저장에 실패했습니다.');
+      showPopup('오류', '모집 일정 저장에 실패했습니다.');
     } finally {
       setSaving(false);
     }
@@ -151,7 +162,8 @@ const RecruitScheduleManagement = () => {
       {/* 마지막 수정 정보 */}
       <div className='mb-6 p-3 bg-blue-50 border border-blue-200 rounded'>
         <p className='text-sm text-gray-700'>
-          마지막 업데이트: <span className='font-semibold'>{formatLastUpdated()}</span>
+          마지막 업데이트:{' '}
+          <span className='font-semibold'>{formatLastUpdated()}</span>
         </p>
       </div>
 
@@ -252,7 +264,9 @@ const RecruitScheduleManagement = () => {
 
           {/* 미리보기 */}
           <div className='p-4 bg-gray-50 border border-gray-200 rounded'>
-            <p className='text-sm font-semibold text-gray-700 mb-2'>일정 미리보기</p>
+            <p className='text-sm font-semibold text-gray-700 mb-2'>
+              일정 미리보기
+            </p>
             <p className='text-sm text-gray-600'>
               {startDate} {startTime} ~ {endDate} {endTime}
             </p>
@@ -269,11 +283,24 @@ const RecruitScheduleManagement = () => {
                   : 'bg-emerald-950 hover:bg-emerald-900 disabled:bg-gray-400'
               }`}
             >
-              {isReadOnly ? '과거 연도 (수정 불가)' : saving ? '저장 중...' : '저장하기'}
+              {isReadOnly
+                ? '과거 연도 (수정 불가)'
+                : saving
+                  ? '저장 중...'
+                  : '저장하기'}
             </button>
           </div>
         </div>
       )}
+
+      {/* Popup */}
+      <Popup isOpen={popup.isOpen} onClose={popup.close}>
+        <Popup.Title>{popupTitle}</Popup.Title>
+        <Popup.Content>{popupMessage}</Popup.Content>
+        <Popup.Button variant='primary' onClick={popup.close}>
+          확인
+        </Popup.Button>
+      </Popup>
     </div>
   );
 };

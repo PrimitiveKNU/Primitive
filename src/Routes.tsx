@@ -1,3 +1,4 @@
+import ProtectedRoute from '@/src/Components/layout/ProtectedRoute';
 import AdminPage from './Pages/AdminPage';
 import ErrorPage from './Pages/ErrorPage';
 import LoginPage from './Pages/LoginPage';
@@ -10,9 +11,6 @@ import ProjectDetailPage from './Pages/ProjectDetailPage';
 import ProjectPage from './Pages/ProjectPage';
 import ProjectUploadPage from './Pages/ProjectUploadPage';
 import RecruitPage from './Pages/RecruitPage/RecruitPage';
-import TestPage from './Pages/TestPage';
-
-import ProtectedRoute from '@/src/Components/layout/ProtectedRoute';
 
 const routes = [
   {
@@ -60,11 +58,7 @@ const routes = [
     path: '/notice/:id',
   },
   {
-    element: (
-      <ProtectedRoute>
-        <TestPage />
-      </ProtectedRoute>
-    ),
+    element: <div></div>,
     path: '/test',
   },
   {

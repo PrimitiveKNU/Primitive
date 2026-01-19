@@ -7,7 +7,6 @@ import {
   FaUsers,
 } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-
 import GlassButton from '@/src/Components/common/button/GlassButton';
 import { ProjectDetail } from '@/src/Types/ProjectType';
 

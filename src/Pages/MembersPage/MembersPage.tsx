@@ -1,14 +1,10 @@
 import { useEffect, useState } from 'react';
 import { FaDev } from 'react-icons/fa';
-
+import Fireworks from '@/src/Components/common/Fireworks';
+import { data, developers } from '@/src/Pages/MembersPage/data';
 import Footer from '../../Components/common/Footer';
 import NavBar from '../../Components/common/NavBar';
 import MemberCard from '../../Components/member/MemberCard';
-
-import Fireworks from '@/src/Components/common/Fireworks';
-import { data, developers } from '@/src/Pages/MembersPage/data';
-
-
 
 const MembersPage = () => {
   useEffect(() => {}, []);

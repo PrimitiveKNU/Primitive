@@ -1,24 +1,20 @@
-import { getAuth } from "firebase/auth";
+import { getAuth } from 'firebase/auth';
 import {
-  doc,
-  updateDoc,
   collection,
-  getDocs,
-  query,
-  where,
+  doc,
   getDoc,
+  getDocs,
   orderBy,
-  startAt,
-  endAt,
-} from "firebase/firestore";
-import { useEffect, useState } from "react";
-import { FaArrowAltCircleUp } from "react-icons/fa";
-import { FaArrowCircleDown } from "react-icons/fa";
-import { HiSearch } from "react-icons/hi";
-
-import { db } from "../../firebase";
-import { MemberDataType } from "../../Types/MemberType";
-import CheckDialog from "../common/CheckDialog";
+  query,
+  updateDoc,
+  where,
+} from 'firebase/firestore';
+import { useEffect, useState } from 'react';
+import { FaArrowAltCircleUp, FaArrowCircleDown } from 'react-icons/fa';
+import { HiSearch } from 'react-icons/hi';
+import { db } from '../../firebase';
+import { MemberDataType } from '../../Types/MemberType';
+import CheckDialog from '../common/CheckDialog';
 
 interface MemberTableProps {
   members: MemberDataType[];
@@ -27,7 +23,12 @@ interface MemberTableProps {
   downgrade: (id: string, level: number, userLevel: number) => Promise<void>;
 }
 
-const MemberTable = ({ members, onDelete, upgrade, downgrade }: MemberTableProps) => {
+const MemberTable = ({
+  members,
+  onDelete,
+  upgrade,
+  downgrade,
+}: MemberTableProps) => {
   // UI 상태관리
   const [dialogOpen, setDialogOpen] = useState(false);
   const [toActiveDialogOpen, setToActiveDialogOpen] = useState(false);
@@ -37,8 +38,7 @@ const MemberTable = ({ members, onDelete, upgrade, downgrade }: MemberTableProps
 
   // 상태 관리
   const [authorityLevel, setAuthorityLevel] = useState(0);
-  const authorityArr = ["동아리원", "관리자", "부회장", "회장"];
-  const [searchInput, setSearchInput] = useState("");
+  const [searchInput, setSearchInput] = useState('');
   const [searchedUsers, setSearchedUsers] = useState<MemberDataType[]>([]);
 
   // Effect
@@ -62,14 +62,14 @@ const MemberTable = ({ members, onDelete, upgrade, downgrade }: MemberTableProps
     try {
       const users = await getDocs(
         query(
-          collection(db, "users"),
-          orderBy("studentYear", "asc"),
-          where("status", "==", "Inactive")
-        )
+          collection(db, 'users'),
+          orderBy('studentYear', 'asc'),
+          where('status', '==', 'Inactive'),
+        ),
       );
       const inactiveUsers: MemberDataType[] = users.docs.map((doc) => ({
         id: doc.id,
-        ...(doc.data() as Omit<MemberDataType, "id">),
+        ...(doc.data() as Omit<MemberDataType, 'id'>),
       }));
       setInactiveUsers(inactiveUsers);
       console.log(inactiveUsers);
@@ -80,9 +80,9 @@ const MemberTable = ({ members, onDelete, upgrade, downgrade }: MemberTableProps
 
   const onActive = async (member: MemberDataType) => {
     try {
-      const userRef = doc(db, "users", member.id);
+      const userRef = doc(db, 'users', member.id);
       await updateDoc(userRef, {
-        status: "Active",
+        status: 'Active',
       });
       setInactiveUsers((prev) => prev.filter((mem) => mem.id !== member.id));
       members.push(member);
@@ -97,11 +97,11 @@ const MemberTable = ({ members, onDelete, upgrade, downgrade }: MemberTableProps
       const auth = getAuth();
       if (auth.currentUser) {
         const uid = auth.currentUser.uid;
-        const response = await getDoc(doc(db, "users", uid));
+        const response = await getDoc(doc(db, 'users', uid));
         setAuthorityLevel(response.data()!.authorityLevel);
       }
     } catch (err) {
-      console.error("권한등급 불러오기 실패", err);
+      console.error('권한등급 불러오기 실패', err);
     }
   };
 
@@ -110,44 +110,44 @@ const MemberTable = ({ members, onDelete, upgrade, downgrade }: MemberTableProps
     try {
       const response = await getDocs(
         query(
-          collection(db, "users"),
-          where("username", ">=", username),
-          where("username", "<=", `${username}${"\uf8ff"}`),
-          orderBy("authorityLevel", "desc"),
-          orderBy("studentYear", "asc")
-        )
+          collection(db, 'users'),
+          where('username', '>=', username),
+          where('username', '<=', `${username}${'\uf8ff'}`),
+          orderBy('authorityLevel', 'desc'),
+          orderBy('studentYear', 'asc'),
+        ),
       );
       const data = response.docs.map((doc) => ({
         id: doc.id,
-        ...(doc.data() as Omit<MemberDataType, "id">),
+        ...(doc.data() as Omit<MemberDataType, 'id'>),
       }));
       setSearchedUsers(data);
       console.log(data);
     } catch (err) {
-      console.error("유저 검색 실패", err);
+      console.error('유저 검색 실패', err);
     }
   };
 
   return (
     <>
-      <div className="w-full inline-flex justify-end items-center text-lg">
-        <div className="flex justify-end items-center relative border rounded-md py-1 px-2 mb-2">
-          <HiSearch className="text-xl left-0" />
+      <div className='w-full inline-flex justify-end items-center text-lg'>
+        <div className='flex justify-end items-center relative border rounded-md py-1 px-2 mb-2'>
+          <HiSearch className='text-xl left-0' />
           <input
             value={searchInput}
             onChange={(e) => {
               setSearchInput(e.target.value);
               searchUserByName(e.target.value);
             }}
-            className="outline-none px-2"
-            placeholder="유저 이름으로 검색"
+            className='outline-none px-2'
+            placeholder='유저 이름으로 검색'
           />
         </div>
       </div>
       <hr />
-      <table className="requestTable mt-2">
+      <table className='requestTable mt-2'>
         <thead>
-          <tr className="border-b-2">
+          <tr className='border-b-2'>
             <th>Index</th>
             <th>이름</th>
             <th>학번</th>
@@ -165,18 +165,28 @@ const MemberTable = ({ members, onDelete, upgrade, downgrade }: MemberTableProps
                   <td>{member.username}</td>
                   <td>{member.studentYear}</td>
                   <td>{member.email}</td>
-                  <td className="w-full flex text-center justify-center gap-3 items-center">
+                  <td className='w-full flex text-center justify-center gap-3 items-center'>
                     <span>{member.authority}</span>
                     {authorityLevel > member.authorityLevel && (
-                      <div className="flex flex-col gap-0.5 text-gray-400">
+                      <div className='flex flex-col gap-0.5 text-gray-400'>
                         <button
-                          onClick={() => upgrade(member.id, member.authorityLevel, authorityLevel)}
+                          onClick={() =>
+                            upgrade(
+                              member.id,
+                              member.authorityLevel,
+                              authorityLevel,
+                            )
+                          }
                         >
                           <FaArrowAltCircleUp />
                         </button>
                         <button
                           onClick={() =>
-                            downgrade(member.id, member.authorityLevel, authorityLevel)
+                            downgrade(
+                              member.id,
+                              member.authorityLevel,
+                              authorityLevel,
+                            )
                           }
                         >
                           <FaArrowCircleDown />
@@ -188,12 +198,12 @@ const MemberTable = ({ members, onDelete, upgrade, downgrade }: MemberTableProps
                     {member.authorityLevel === 3 ||
                     member.authorityLevel === 2 ||
                     member.authorityLevel === 1 ? (
-                      <button className="bg-gray-300 px-2 py-1.5 cursor-default rounded-md hover:shadow-lg text-sm text-nowrap">
+                      <button className='bg-gray-300 px-2 py-1.5 cursor-default rounded-md hover:shadow-lg text-sm text-nowrap'>
                         😎
                       </button>
                     ) : (
                       <button
-                        className="bg-red-300 px-2 py-1.5 rounded-md hover:bg-red-400 hover:shadow-lg text-sm text-nowrap"
+                        className='bg-red-300 px-2 py-1.5 rounded-md hover:bg-red-400 hover:shadow-lg text-sm text-nowrap'
                         onClick={() => openDialog(member)}
                       >
                         비활성화
@@ -204,7 +214,7 @@ const MemberTable = ({ members, onDelete, upgrade, downgrade }: MemberTableProps
               ))
             ) : (
               <tr>
-                <td colSpan={6} className="w-full text-center py-6">
+                <td colSpan={6} className='w-full text-center py-6'>
                   유저를 찾을 수 없습니다.
                 </td>
               </tr>
@@ -217,18 +227,28 @@ const MemberTable = ({ members, onDelete, upgrade, downgrade }: MemberTableProps
                   <td>{member.username}</td>
                   <td>{member.studentYear}</td>
                   <td>{member.email}</td>
-                  <td className="w-full flex text-center justify-center gap-3 items-center">
+                  <td className='w-full flex text-center justify-center gap-3 items-center'>
                     <span>{member.authority}</span>
                     {authorityLevel > member.authorityLevel && (
-                      <div className="flex flex-col gap-0.5 text-gray-400">
+                      <div className='flex flex-col gap-0.5 text-gray-400'>
                         <button
-                          onClick={() => upgrade(member.id, member.authorityLevel, authorityLevel)}
+                          onClick={() =>
+                            upgrade(
+                              member.id,
+                              member.authorityLevel,
+                              authorityLevel,
+                            )
+                          }
                         >
                           <FaArrowAltCircleUp />
                         </button>
                         <button
                           onClick={() =>
-                            downgrade(member.id, member.authorityLevel, authorityLevel)
+                            downgrade(
+                              member.id,
+                              member.authorityLevel,
+                              authorityLevel,
+                            )
                           }
                         >
                           <FaArrowCircleDown />
@@ -240,12 +260,12 @@ const MemberTable = ({ members, onDelete, upgrade, downgrade }: MemberTableProps
                     {member.authorityLevel === 3 ||
                     member.authorityLevel === 2 ||
                     member.authorityLevel === 1 ? (
-                      <button className="bg-gray-300 px-2 py-1.5 cursor-default rounded-md hover:shadow-lg text-sm text-nowrap">
+                      <button className='bg-gray-300 px-2 py-1.5 cursor-default rounded-md hover:shadow-lg text-sm text-nowrap'>
                         😎
                       </button>
                     ) : (
                       <button
-                        className="bg-red-300 px-2 py-1.5 rounded-md hover:bg-red-400 hover:shadow-lg text-sm text-nowrap"
+                        className='bg-red-300 px-2 py-1.5 rounded-md hover:bg-red-400 hover:shadow-lg text-sm text-nowrap'
                         onClick={() => openDialog(member)}
                       >
                         비활성화
@@ -257,7 +277,7 @@ const MemberTable = ({ members, onDelete, upgrade, downgrade }: MemberTableProps
             </>
           ) : (
             <tr>
-              <td colSpan={6} className="w-full text-center py-6">
+              <td colSpan={6} className='w-full text-center py-6'>
                 이럴수가..! 회원이 아무도 없어요.. 🥲
               </td>
             </tr>
@@ -271,7 +291,7 @@ const MemberTable = ({ members, onDelete, upgrade, downgrade }: MemberTableProps
                     getInactiveUsers();
                     setIsShowInactive(false);
                   }}
-                  className="text-center px-2 py-1 bg-blue-950 text-white rounded-xl text-sm hover:shadow-lg"
+                  className='text-center px-2 py-1 bg-blue-950 text-white rounded-xl text-sm hover:shadow-lg'
                 >
                   비활성화된 유저보기
                 </button>
@@ -288,7 +308,7 @@ const MemberTable = ({ members, onDelete, upgrade, downgrade }: MemberTableProps
                   <td>{member.authority}</td>
                   <td>
                     <button
-                      className="bg-green-300 px-2 py-1.5 rounded-md hover:bg-green-400 hover:shadow-lg text-sm text-nowrap"
+                      className='bg-green-300 px-2 py-1.5 rounded-md hover:bg-green-400 hover:shadow-lg text-sm text-nowrap'
                       onClick={() => {
                         setToActiveDialogOpen(true);
                         setSelectedMember(member);
@@ -305,8 +325,8 @@ const MemberTable = ({ members, onDelete, upgrade, downgrade }: MemberTableProps
       </table>
       {dialogOpen && (
         <CheckDialog
-          message={"정말로 이 회원을 삭제하시겠습니까?"}
-          btnColor={"red"}
+          message={'정말로 이 회원을 삭제하시겠습니까?'}
+          btnColor={'red'}
           setDialogOpen={closeDialog}
           onConfirm={() => {
             onDelete(selectedMember!);
@@ -317,8 +337,8 @@ const MemberTable = ({ members, onDelete, upgrade, downgrade }: MemberTableProps
       )}
       {toActiveDialogOpen && (
         <CheckDialog
-          message={"정말로 이 회원을 복구하시겠습니까?"}
-          btnColor={"green"}
+          message={'정말로 이 회원을 복구하시겠습니까?'}
+          btnColor={'green'}
           setDialogOpen={closeDialog}
           onConfirm={() => {
             onActive(selectedMember!);

@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { FaPlus, FaSearch, FaSearchengin } from 'react-icons/fa';
+import { FaPlus, FaSearch } from 'react-icons/fa';
 import { FaX } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
-
 import {
   Select,
   SelectContent,
@@ -11,7 +10,6 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Filter } from '@/src/Types/ProjectType';
-
 
 interface ProjectSearchBarProps {
   filter: Filter;
