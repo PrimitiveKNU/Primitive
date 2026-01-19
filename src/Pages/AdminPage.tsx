@@ -1,4 +1,9 @@
 import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  onAuthStateChanged,
+} from 'firebase/auth';
+import {
   getDocs,
   query,
   collection,
@@ -11,23 +16,21 @@ import {
   orderBy,
   addDoc,
 } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import Footer from '../Components/common/Footer';
 import NavBar from '../Components/common/NavBar';
-import { adminApp, db } from '../firebase';
-import { useEffect, useState } from 'react';
-import RequestTable from '../Components/RequestTable';
 import MemberTable from '../Components/member/MemberTable';
-import {
-  createUserWithEmailAndPassword,
-  getAuth,
-  onAuthStateChanged,
-} from 'firebase/auth';
+import NoticeUpload from '../Components/NoticeUpload';
+import RecruitFileUpload from '../Components/RecruitFileUpload';
+import RecruitScheduleManagement from '../Components/RecruitScheduleManagement';
+import RequestTable from '../Components/RequestTable';
+import StaffsWord from '../Components/StaffsWord';
+import { adminApp, db } from '../firebase';
 import useAuthStore from '../store';
-import { useNavigate } from 'react-router-dom';
 import Member, { MemberDataType } from '../Types/MemberType';
 import User from '../Types/User';
-import StaffsWord from '../Components/StaffsWord';
-import NoticeUpload from '../Components/NoticeUpload';
 
 const AdminPage = () => {
   // 상태 관리
@@ -341,6 +344,26 @@ const AdminPage = () => {
           <NoticeUpload onSubmit={postNotice} />
         </div>
       );
+    } else if (selectedTab === 4) {
+      return (
+        <div className='overflow-x-scroll'>
+          <h3 className='text-xl font-bold p-2'>모집 자료 관리</h3>
+          <p className='text-sm px-2 text-gray-600 mb-3'>
+            연도별 모집 신청서와 OT 자료를 업로드할 수 있습니다.
+          </p>
+          <RecruitFileUpload />
+        </div>
+      );
+    } else if (selectedTab === 5) {
+      return (
+        <div className='overflow-x-scroll'>
+          <h3 className='text-xl font-bold p-2'>모집 일정 관리</h3>
+          <p className='text-sm px-2 text-gray-600 mb-3'>
+            연도별 모집 시작/종료 날짜와 시간을 설정할 수 있습니다.
+          </p>
+          <RecruitScheduleManagement />
+        </div>
+      );
     }
   };
 
@@ -376,6 +399,18 @@ const AdminPage = () => {
                   onClick={() => setSelectedTab(3)}
                 >
                   공지사항 작성
+                </div>
+                <div
+                  className={`${selectedTab === 4 && 'selected'}`}
+                  onClick={() => setSelectedTab(4)}
+                >
+                  모집 자료 관리
+                </div>
+                <div
+                  className={`${selectedTab === 5 && 'selected'}`}
+                  onClick={() => setSelectedTab(5)}
+                >
+                  모집 일정 관리
                 </div>
               </div>
             </div>

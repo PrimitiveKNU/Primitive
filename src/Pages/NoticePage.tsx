@@ -1,12 +1,14 @@
+import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import Footer from "../Components/common/Footer";
+import LoadingCircle from "../Components/common/LoadingCircle";
 import NavBar from "../Components/common/NavBar";
 import NoticeBox from "../Components/NoticeBox";
 import { db } from "../firebase";
-import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import Notice from "../Types/NoticeType";
-import LoadingCircle from "../Components/common/LoadingCircle";
-import { useNavigate } from "react-router-dom";
+
 
 const NoticePage = () => {
   const exNotice = [

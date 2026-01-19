@@ -1,8 +1,3 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import Footer from '../Components/common/Footer';
-import NavBar from '../Components/common/NavBar';
-import useAuthStore from '../store';
-import { Link, useNavigate } from 'react-router-dom';
 import { getAuth } from 'firebase/auth';
 import {
   collection,
@@ -13,15 +8,23 @@ import {
   updateDoc,
   where,
 } from 'firebase/firestore';
-import { db, storage } from '../firebase';
-import logo from '../Images/logo.webp';
-import User from '../Types/User.d';
-import { ProjectDetail } from '../Types/ProjectType';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { HiPlusSmall } from 'react-icons/hi2';
+import { Link, useNavigate } from 'react-router-dom';
+
+import Footer from '../Components/common/Footer';
 import LoadingCircle from '../Components/common/LoadingCircle';
+import NavBar from '../Components/common/NavBar';
 import ProjectListCard from '../Components/project/ProjectListCard';
 import UserDataTable from '../Components/UserDataTable';
-import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-import { HiPlusSmall } from 'react-icons/hi2';
+import { db, storage } from '../firebase';
+import logo from '../Images/logo.webp';
+import useAuthStore from '../store';
+
+import { ProjectDetail } from '../Types/ProjectType';
+import User from '../Types/User.d';
+
 
 const MyPage = () => {
   // 전역 상태 관리

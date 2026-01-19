@@ -1,6 +1,3 @@
-import { useEffect, useRef, useState } from 'react';
-import NavBar from '../Components/common/NavBar';
-import Footer from '../Components/common/Footer';
 import {
   QueryDocumentSnapshot,
   QueryFieldFilterConstraint,
@@ -12,22 +9,26 @@ import {
   startAfter,
   where,
 } from 'firebase/firestore';
-import { db } from '../firebase';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Filter, ProjectDetail } from '../Types/ProjectType';
-import useAuthStore from '../store';
+
+import Footer from '../Components/common/Footer';
 import LoadingCircle from '../Components/common/LoadingCircle';
+import NavBar from '../Components/common/NavBar';
 import ScrollToTop from '../Components/common/ScrollToTop';
-import NewProjectCard from '@/src/Components/project/NewProjectCard';
+import { db } from '../firebase';
+import useAuthStore from '../store';
+import { Filter, ProjectDetail } from '../Types/ProjectType';
+
 import { getLikesCount } from '@/src/api/firebase/like';
+import GlassButton from '@/src/Components/common/button/GlassButton';
 import Skeleton from '@/src/Components/common/Skeleton';
 import FilterContainer from '@/src/Components/project/FilterContainer';
-import ProjectHeader from '@/src/Components/project/ProjectHeader';
+import NewProjectCard from '@/src/Components/project/NewProjectCard';
 import ProjectGridLayout from '@/src/Components/project/ProjectGridLayout';
-import useInfiniteScroll from '@/src/Hooks/useInfiniteScroll';
-
+import ProjectHeader from '@/src/Components/project/ProjectHeader';
 import ProjectSearchBar from '@/src/Components/project/ProjectSearchBar';
-import GlassButton from '@/src/Components/common/button/GlassButton';
+import useInfiniteScroll from '@/src/Hooks/common/useInfiniteScroll';
 
 type MyIndexType = {
   team: QueryFieldFilterConstraint;

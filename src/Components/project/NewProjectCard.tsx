@@ -1,11 +1,13 @@
-import { ProjectDetail } from '@/src/Types/ProjectType';
-import { Link } from 'react-router-dom';
-import { HiLockClosed } from 'react-icons/hi';
 import { useEffect, useState } from 'react';
-import { getGitHubStars } from '@/src/Utils/githubAPI';
-import ProjectHoverDetail from '@/src/Components/project/ProjectHoverDetail';
-import LoadingSpinner from '@/src/Components/common/loading/LoadingSpinner';
+import { HiLockClosed } from 'react-icons/hi';
 import { MdOutlineHideImage } from 'react-icons/md';
+import { Link } from 'react-router-dom';
+
+import LoadingSpinner from '@/src/Components/common/loading/LoadingSpinner';
+import ProjectHoverDetail from '@/src/Components/project/ProjectHoverDetail';
+import { ProjectDetail } from '@/src/Types/ProjectType';
+import { getGitHubStars } from '@/src/Utils/githubAPI';
+
 
 interface ProjectCardProps {
   projectDetail: ProjectDetail;

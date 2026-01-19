@@ -1,11 +1,12 @@
-import { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { debounce } from 'lodash';
-import { IoMenuOutline } from 'react-icons/io5';
-import { useSpring, animated } from 'react-spring';
-import styles from '../../Styles/menu.module.css';
-import useAuthStore from '../../store';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { debounce } from 'lodash';
+import { useState, useEffect } from 'react';
+import { IoMenuOutline } from 'react-icons/io5';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useSpring, animated } from 'react-spring';
+
+import useAuthStore from '../../store';
+import styles from '../../Styles/menu.module.css';
 
 interface Route {
   path: string;

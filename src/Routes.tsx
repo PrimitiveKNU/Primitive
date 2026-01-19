@@ -1,16 +1,17 @@
-import RecruitPage from './Pages/RecruitPage/RecruitPage';
+import AdminPage from './Pages/AdminPage';
+import ErrorPage from './Pages/ErrorPage';
+import LoginPage from './Pages/LoginPage';
 import MainPage from './Pages/MainPage';
 import MembersPage from './Pages/MembersPage/MembersPage';
-import ProjectPage from './Pages/ProjectPage';
-import ErrorPage from './Pages/ErrorPage';
-import TestPage from './Pages/TestPage';
-import AdminPage from './Pages/AdminPage';
-import ProjectDetailPage from './Pages/ProjectDetailPage';
-import LoginPage from './Pages/LoginPage';
 import MyPage from './Pages/MyPage';
-import ProjectUploadPage from './Pages/ProjectUploadPage';
-import NoticePage from './Pages/NoticePage';
 import NoticeDetailPage from './Pages/NoticeDetailPage';
+import NoticePage from './Pages/NoticePage';
+import ProjectDetailPage from './Pages/ProjectDetailPage';
+import ProjectPage from './Pages/ProjectPage';
+import ProjectUploadPage from './Pages/ProjectUploadPage';
+import RecruitPage from './Pages/RecruitPage/RecruitPage';
+import TestPage from './Pages/TestPage';
+
 import ProtectedRoute from '@/src/Components/layout/ProtectedRoute';
 
 const routes = [

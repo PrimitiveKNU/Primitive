@@ -1,6 +1,6 @@
 import React from "react";
-import { HiOutlineBackspace } from "react-icons/hi2";
 import { useState } from "react";
+import { HiOutlineBackspace } from "react-icons/hi2";
 interface ImageDetailViewProps {
   closeModal: () => void;
   thumbnail: string;

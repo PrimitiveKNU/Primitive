@@ -1,6 +1,7 @@
+import { FaUser } from "react-icons/fa";
+
 import GlassButton from "@/src/Components/common/button/GlassButton";
 import LoadingSpinner from "@/src/Components/common/loading/LoadingSpinner";
-import { FaUser } from "react-icons/fa";
 import useAuthenticate from "@/src/Hooks/auth/useAuthenticate";
 
 const AuthForm = () => {
