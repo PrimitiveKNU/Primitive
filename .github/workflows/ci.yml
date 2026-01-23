@@ -1,14 +1,14 @@
 name: CI
 
 on:
-pull_request:
-  branches:
-    - master
-    - develop
-push:
-  branches:
-    - master
-    - develop
+  pull_request:
+    branches:
+      - master
+      - develop
+  push:
+    branches:
+      - master
+      - develop
 
 jobs:
   lint-and-typecheck:
