@@ -47,11 +47,13 @@ export default [
     },
   },
   {
-    files: ['*.config.js', '*.config.ts'],
+    files: ['*.config.js', '*.config.ts', '*.config.cjs'],
     languageOptions: {
       globals: {
         __dirname: 'readonly',
         __filename: 'readonly',
+        module: 'readonly',
+        require: 'readonly',
       },
     },
     rules: {

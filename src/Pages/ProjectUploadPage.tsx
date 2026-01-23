@@ -119,7 +119,8 @@ const ProjectUploadPage = () => {
   useEffect(() => {
     if (editorRef.current) {
       const editor = editorRef.current.getEditor();
-      editor.setContents(initialContents as Delta.Static);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      editor.setContents({ ops: initialContents } as any);
     }
   }, [initialContents]);
 
