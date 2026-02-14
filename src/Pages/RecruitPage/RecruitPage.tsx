@@ -217,7 +217,7 @@ const RecruitPage = () => {
             <div className={'my-1'}></div>
           )}
           <a
-            href='https://hyeonji0401.github.io/JoinPrimitive/'
+            href='https://primitive-members-mbti.vercel.app/'
             target='_blank'
             rel='noreferrer'
           >
@@ -253,7 +253,7 @@ const RecruitPage = () => {
             }}
             style={{ ...springs }}
             src={recruitData.recruitNotice}
-            alt='25년도 모집공고'
+            alt='26년도 모집공고'
             onLoad={() => {
               setLoading(false);
             }}

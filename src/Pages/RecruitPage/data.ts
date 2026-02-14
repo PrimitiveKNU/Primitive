@@ -44,18 +44,18 @@ export const recruitData: IRecruitData = {
   // OT 자료 경로를 입력
   ot: '/25/2025 PRIMITIVE 신입생 OT 자료.pdf',
   // 모집 공고 이미지 경로를 입력
-  recruitNotice: '/25/25PrimitiveRecruit.webp',
+  recruitNotice: '/26/26PrimitiveRecruit.webp',
   // 아래는 회장/부회장 정보를 입력해주세요.
   presidentData: {
     position: '회장',
-    name: '장준우',
-    kakaoID: 'JJW1102',
-    email: 'jwjang1102@naver.com',
+    name: '최아현',
+    kakaoID: '4a.huxn_',
+    email: 'choiahye0n211@gmail.com',
   },
   vicePresidentData: {
     position: '부회장',
-    name: '최세진',
-    kakaoID: 'marin6670',
-    email: 'marin6670@gmail.com',
+    name: '강현찬',
+    kakaoID: 'kanghyun122',
+    email: 'kanghyun122@naver.com',
   },
 };

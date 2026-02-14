@@ -4,17 +4,17 @@ import jinseong from '../../Images/members/jinseong.webp';
 export const data = {
   presidentData: {
     position: '회장',
-    name: '장준우',
-    kakaoID: 'JJW1102',
-    email: 'jwjang1102@naver.com',
-    grade: 21,
+    name: '최아현',
+    kakaoID: '4a.huxn_',
+    email: 'choiahye0n211@gmail.com',
+    grade: 24,
   },
   vicePresidentData: {
     position: '부회장',
-    name: '최세진',
-    kakaoID: 'marin6670',
-    email: 'marin6670@gmail.com',
-    grade: 21,
+    name: '강현찬',
+    kakaoID: 'kanghyun122',
+    email: 'kanghyun122@naver.com',
+    grade: 22,
   },
 };
 

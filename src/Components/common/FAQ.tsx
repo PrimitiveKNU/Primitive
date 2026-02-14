@@ -28,7 +28,7 @@ const FAQ = () => {
           />
           <QuestionBox
             question={'신입생 교육에서는 무엇을 가르치나요?'}
-            answer={'1학기에는 C, Java 언어를 중점으로 교육합니다!'}
+            answer={'1학기에는 C, Java, Python 언어를 중점으로 교육합니다!'}
           />
           <QuestionBox
             question={'활동에서는 어떤 기술들을 사용하나요?'}
