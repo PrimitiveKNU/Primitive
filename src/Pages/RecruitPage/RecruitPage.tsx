@@ -13,9 +13,9 @@ const RecruitPage = () => {
   const [loading, setLoading] = useState(true);
   const [isDate, setIsDate] = useState(false);
   const [timeString, setTimeString] = useState('');
-  const [formURL, setFormURL] = useState<string>(recruitData.form);
+  // const [formURL, setFormURL] = useState<string>(recruitData.form);
   const [otURL, setOtURL] = useState<string>(recruitData.ot);
-  const [formFileName, setFormFileName] = useState<string>('모집신청서.hwp');
+  // const [formFileName, setFormFileName] = useState<string>('모집신청서.hwp');
   const [otFileName, setOtFileName] = useState<string>('OT자료.pdf');
   const [popupMessage, setPopupMessage] = useState<string>('');
   const [popupTitle, setPopupTitle] = useState<string>('');
@@ -31,12 +31,6 @@ const RecruitPage = () => {
 
         if (docSnap.exists()) {
           const data = docSnap.data();
-          if (data.formFile?.downloadURL) {
-            setFormURL(data.formFile.downloadURL);
-            if (data.formFile.name) {
-              setFormFileName(data.formFile.name);
-            }
-          }
           if (data.otFile?.downloadURL) {
             setOtURL(data.otFile.downloadURL);
             if (data.otFile.name) {
