@@ -42,7 +42,7 @@ const MembersPage = () => {
               name={data.presidentData.name}
               number={data.presidentData.grade}
               position={data.presidentData.position}
-              description={`안녕하세요 PRIMITIVE 22대 회장 ${data.presidentData.name}입니다.`}
+              description={`안녕하세요 PRIMITIVE 24대 회장 ${data.presidentData.name}입니다.`}
               emoji={emojiPresident}
               handleClick={() => handleClick(setEmojiPresident)}
             />

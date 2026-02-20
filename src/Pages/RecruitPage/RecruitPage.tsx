@@ -198,13 +198,15 @@ const RecruitPage = () => {
           {isDate ? (
             <>
               {' '}
-              <button
-                disabled={!isDate}
-                onClick={() => handleFileDownload(formURL, formFileName)}
-                className={`bg-white shadow-xl py-2 px-6 rounded-lg hover:shadow-lg hover:shadow-indigo-200  w-72 ${disabledStyle}`}
+              <a
+                href='https://forms.gle/8aDB9L7XTZRxrhDv6/'
+                target='_blank'
+                rel='noreferrer'
               >
-                👉 모집 신청서 양식 다운로드
-              </button>
+                <button className='bg-yellow-100 py-2 px-6 rounded-lg shadow-xl hover:bg-yellow-200 w-72 '>
+                  <div>👉 모집 신청서 작성하기</div>
+                </button>
+              </a>
               <button
                 disabled={!isDate}
                 onClick={() => handleFileDownload(otURL, otFileName)}
